@@ -44,13 +44,13 @@ def make_idat(img):
   encoded_data = encode_data(img)
   compressed_data = compress_data(encoded_data)
   return compressed_data
-def dump_png(out, img):
+def dump_png(out, img, alpha=False):
   out.write(HEADER)
   assert len(img) > 0  # assume we were not given empty image data
   width = len(img[0])
   height = len(img)
   bit_depth = 8  # bits per pixel
-  color_type = 2  # pixel is RGB triple
+  color_type = 6 if alpha else 2
   ihdr_data = make_ihdr(width, height, bit_depth, color_type)
   chunk(out, b'IHDR', ihdr_data)
   compressed_data = make_idat(img)
