@@ -35,11 +35,11 @@ for x, y in circle:
   if x < 0 and y < 0:
     scr[px(radius+x, radius+y)] = [0, 0, 0, 0]
   if x > 0 and y < 0:
-    scr[px(size-radius+x, radius+y)] = [0, 0, 0, 0]
+    scr[px(size-radius+x-1, radius+y)] = [0, 0, 0, 0]
   if x > 0 and y > 0:
-    scr[px(size-radius+x, size-radius+y)] = [0, 0, 0, 0]
+    scr[px(size-radius+x-1, size-radius+y-1)] = [0, 0, 0, 0]
   if x < 0 and y > 0:
-    scr[px(radius+x, size-radius+y)] = [0, 0, 0, 0]
+    scr[px(radius+x-1, size-radius+y-1)] = [0, 0, 0, 0]
 png = draw(size, scr)
 f = open("favicon.png", "wb")
 dump_png(f, png, True)
