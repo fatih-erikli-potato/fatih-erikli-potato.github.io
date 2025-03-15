@@ -1,2 +1,2 @@
 body {font-family: system-ui; font-size: 14px;background-image: url(/draft.png); background-size: 100%;background-repeat: no-repeat; background-position: center -300px;}
-.bio {}
+.bio {bottom: 0; left: 0; padding: 30px; position: absolute;}
