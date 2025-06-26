@@ -1,5 +1,5 @@
 function loadDraft() {
-  return fetch("/draft.json").then(function (r) {return r.json()});
+  return fetch("draft.json").then(function (r) {return r.json()});
 }
 let draft;
 window.addEventListener("load", function () {
@@ -12,8 +12,6 @@ window.addEventListener("load", function () {
     container.appendChild(renderTextCanvas(txt, 0.2));
     txt = `Software Developer`;
     container.appendChild(renderTextCanvas(txt, 0.1, 30));
-    txt = `Similar`;
-    container.appendChild(renderTextCanvas(txt, 0.1));
   });
 });
 function getGroupContent(groupId) {
