@@ -1,5 +1,5 @@
 function loadDraft() {
-  return fetch("draft.json").then(function (r) {return r.json()});
+  return fetch("/draft.json").then(function (r) {return r.json()});
 }
 let draft;
 window.addEventListener("load", function () {
@@ -10,6 +10,8 @@ window.addEventListener("load", function () {
     draft = _draft;
     let txt = `Fatih Erikli`;
     container.appendChild(renderTextCanvas(txt, 0.2));
+    txt = `Software Developer`;
+    container.appendChild(renderTextCanvas(txt, 0.1, 30));
   });
 });
 function getGroupContent(groupId) {
@@ -29,7 +31,7 @@ function findGlyphGroup(glyph) {
   }
   throw new Error(`Glyph not found: ${glyph}`);
 }
-function renderTextCanvas(text, scale) {
+function renderTextCanvas(text, scale, blur=0) {
   const SPACE_WIDTH = 60;
   const SPACE_INBETWEEN = 20;
   let canvasWidth = 0;
@@ -66,17 +68,22 @@ function renderTextCanvas(text, scale) {
   }
   const canvasElement = createCanvasElement(canvasWidth, canvasHeight, scale);
   const canvasContext = canvasElement.getContext("2d");
+  if (blur > 0) {
+    canvasContext.fillStyle = "white";
+    canvasContext.fillRect(0, 0, canvasWidth, canvasHeight);
+  }
   canvasContext.fillStyle = "black";
   for (const path2d of path2ds) {
     canvasContext.fill(path2d);
   }
+  if (blur > 0) {
+    blurCanvas(canvasContext, canvasWidth, canvasHeight, blur)
+  }
   return canvasElement;
 }
-function blur(canvasContext, canvasWidth, canvasHeight) {
+function blurCanvas(canvasContext, canvasWidth, canvasHeight, square) {
   const imageData = canvasContext.getImageData(0, 0, canvasWidth, canvasHeight);
   const data = imageData.data;
-  
-  const square = 10;
   for (let x = 0; x < canvasWidth-square; x+= square) {
     for (let y = 0; y < canvasHeight-square; y += square) {
       const rgb = avgRGB(x, y, square, data, canvasWidth);
