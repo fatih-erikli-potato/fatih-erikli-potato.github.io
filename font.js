@@ -1,5 +1,5 @@
 function loadDraft() {
-  return fetch("/draft.json").then(function (r) {return r.json()});
+  return fetch("draft.json").then(function (r) {return r.json()});
 }
 let draft;
 window.addEventListener("load", function () {
