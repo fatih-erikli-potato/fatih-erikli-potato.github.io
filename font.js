@@ -11,7 +11,7 @@ window.addEventListener("load", function () {
     let txt = `Fatih Erikli`;
     container.appendChild(renderTextCanvas(txt, 0.2));
     txt = `Software Developer`;
-    container.appendChild(renderTextCanvas(txt, 0.1, 30));
+    container.appendChild(renderTextCanvas(txt, 0.1));
   });
 });
 function getGroupContent(groupId) {
