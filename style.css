@@ -5,6 +5,6 @@
   width: 512px;
   height: 512px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: right;
+  align-items: end;
 }
