@@ -1,7 +1,7 @@
 .render {
   position: absolute;
-  bottom: 50px;
-  right: 50px;
+  bottom: 0;
+  right: 0;
   width: 256px;
   height: 256px;
   display: flex;
