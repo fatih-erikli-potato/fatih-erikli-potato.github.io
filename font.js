@@ -7,14 +7,13 @@ window.addEventListener("load", function () {
   container.style.display = "flex";
   container.style.flexDirection = "column";
   loadDraft().then(function (_draft) {
-    draft = _draft;
     let txt = `Fatih Erikli`;
-    container.appendChild(renderTextCanvas(txt, 0.2));
+    container.appendChild(renderTextCanvas(_draft, txt, 4));
     txt = `Software Developer`;
-    container.appendChild(renderTextCanvas(txt, 0.1));
+    container.appendChild(renderTextCanvas(_draft, txt, 4));
   });
 });
-function getGroupContent(groupId) {
+function getGroupContent(draft, groupId) {
   const groupContent = [];
   for (const obj of draft) {
     if ((obj.type == "ball" || obj.type == "curved-surface") && obj["group-id"] == groupId) {
@@ -23,28 +22,55 @@ function getGroupContent(groupId) {
   }
   return groupContent;
 }
-function findGlyphGroup(glyph) {
+function findGlyphGroup(draft, glyph) {
   for (const obj of draft) {
     if (obj.type == "glyph" && obj.glyph == glyph) {
-      return getGroupContent(obj["group-id"]);
+      return getGroupContent(draft, obj["group-id"]);
     }
   }
   throw new Error(`Glyph not found: ${glyph}`);
 }
-function renderTextCanvas(text, scale, blur=0) {
-  const SPACE_WIDTH = 60;
-  const SPACE_INBETWEEN = 20;
+function scaleDraft(draft, s) {
+  const draftnew = [];
+  for (const obj of draft) {
+    if (obj.type == "ball") {
+      draftnew.push({
+        ...obj,
+        x: obj.x * s,
+        y: obj.y * s,
+        z: obj.z * s,
+      })
+    } else if (obj.type == "curved-surface") {
+      draftnew.push({
+        ...obj,
+        points: obj.points.map((point) => ({
+          x: point.x * s,
+          y: point.y * s,
+          z: point.z * s
+        }))
+      });
+    } else {
+      draftnew.push(obj);
+    }
+  }
+  return draftnew;
+}
+function renderTextCanvas(draft, text, dpi) {
+  draft = scaleDraft(draft, dpi);
+  const SPACE_WIDTH = 60 * dpi;
+  const SPACE_INBETWEEN = 20 * dpi;
   let canvasWidth = 0;
   let canvasHeight = 0;
   let currentX = 0;
   const path2ds = [];
+  console.log(draft)
   for (const glyph of text) {
     if (glyph == " ") {
       canvasWidth += SPACE_WIDTH;
       currentX += SPACE_WIDTH;
       continue;
     }
-    const glyphObjects = findGlyphGroup(glyph);
+    const glyphObjects = findGlyphGroup(draft, glyph);
     const boundingBox = boundingBoxObjects(glyphObjects);
     const origin = boundingBoxOrigin(boundingBox);
     const width = (boundingBox["max-x"] - boundingBox["min-x"]);
@@ -66,18 +92,11 @@ function renderTextCanvas(text, scale, blur=0) {
     canvasWidth += width + SPACE_INBETWEEN;
     currentX += width + SPACE_INBETWEEN;
   }
-  const canvasElement = createCanvasElement(canvasWidth, canvasHeight, scale);
+  const canvasElement = createCanvasElement(canvasWidth, canvasHeight);
   const canvasContext = canvasElement.getContext("2d");
-  if (blur > 0) {
-    canvasContext.fillStyle = "white";
-    canvasContext.fillRect(0, 0, canvasWidth, canvasHeight);
-  }
   canvasContext.fillStyle = "black";
   for (const path2d of path2ds) {
     canvasContext.fill(path2d);
-  }
-  if (blur > 0) {
-    blurCanvas(canvasContext, canvasWidth, canvasHeight, blur)
   }
   return canvasElement;
 }
@@ -164,12 +183,10 @@ function renderTextSvg(text, scale) {
   }
   return svgElement;
 }
-function createCanvasElement(width, height, scale) {
+function createCanvasElement(width, height) {
   const canvasElement = document.createElement("canvas");
   canvasElement.setAttribute("width", width);
   canvasElement.setAttribute("height", height);
-  canvasElement.style.width = `${width * scale}px`;
-  canvasElement.style.height = `${height * scale}px`;
   return canvasElement;
 }
 function createSvgElement(width, height, scale) {
