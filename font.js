@@ -62,9 +62,11 @@ function renderTextCanvas(draft, text, dpi) {
   let canvasWidth = 0;
   let canvasHeight = 0;
   let currentX = 0;
+  let currentY = 0;
   const path2ds = [];
-  console.log(draft)
-  for (const glyph of text) {
+  let glyphheight;
+  for (let i = 0; i < text.length; i++) {
+    const glyph = text[i];
     if (glyph == " ") {
       canvasWidth += SPACE_WIDTH;
       currentX += SPACE_WIDTH;
@@ -75,22 +77,26 @@ function renderTextCanvas(draft, text, dpi) {
     const origin = boundingBoxOrigin(boundingBox);
     const width = (boundingBox["max-x"] - boundingBox["min-x"]);
     const height = (boundingBox["max-y"] - boundingBox["min-y"]);
-    canvasHeight = Math.max(height, canvasHeight);
+    if (typeof glyphheight == "undefined") {
+      glyphheight = height;
+      canvasHeight = height;
+    }
     for (const obj of glyphObjects) {
       if (obj["type"] == "curved-surface") {
         const points = []
         for (const point of obj["points"]) {
           const x = currentX + width/2 + (point["x"] - origin["x"]);
-          const y = (height/2) + (point["y"] - origin["y"]) * -1;
+          const y = currentY + (height/2) + (point["y"] - origin["y"]) * -1;
           points.push([x, y]);
         }
         path2ds.push(createPath2d(points));
       }
     }
-    // const rect = createRect(currentX, 0, width, height);
-    // svgContent.push(rect);
-    canvasWidth += width + SPACE_INBETWEEN;
-    currentX += width + SPACE_INBETWEEN;
+    if (i < text.length - 1) {
+      currentX += SPACE_INBETWEEN; 
+    }
+    canvasWidth = Math.max(canvasWidth, currentX + width);
+    currentX += width;
   }
   const canvasElement = createCanvasElement(canvasWidth, canvasHeight);
   const canvasContext = canvasElement.getContext("2d");
