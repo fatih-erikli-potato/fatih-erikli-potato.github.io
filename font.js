@@ -4,15 +4,68 @@ function loadDraft() {
 let draft;
 window.addEventListener("load", function () {
   const container = document.querySelector(".container");
-  container.style.display = "flex";
-  container.style.flexDirection = "column";
   loadDraft().then(function (_draft) {
-    let txt = `Fatih Erikli`;
-    container.appendChild(renderTextCanvas(_draft, txt, 4));
-    txt = `Software Developer`;
-    container.appendChild(renderTextCanvas(_draft, txt, 4));
+    const draft = scaleDraft(_draft, 4);
+    container.appendChild(textToFragment(draft, "Fatih Erikli", 50, 3, 10));
+    container.appendChild(textToFragment(draft, `I am a software developer. I live in Karab${String.fromCharCode(252)}k. I am creating a 3d modeling software. `, 30, 3, 6));
   });
 });
+function textToFragment(draft, text, txtheight, spaceinbetween, spacerwidth) {
+  const fragment = document.createElement("div");
+  fragment.style.display = "flex";
+  fragment.style.flexDirection = "row";
+  fragment.style.gap = `${spaceinbetween}px`;
+  fragment.style.flexWrap = "wrap";
+  let spacer = 0;
+  let prev;
+  for (const t of text) {
+    if (t == " ") {
+      spacer += spacerwidth;
+      continue;
+    }
+    if (spacer > 0) {
+      prev.style.marginRight = `${spacer}px`;
+      spacer = 0;
+    }
+    if (t == "\n") {
+      prev.style.flexBasis = "100%";
+      continue;
+    }
+    const canvaswd = glyphToCanvas(draft, t);
+    const rat = txtheight/canvaswd.height;
+    canvaswd.canvasElement.style.width = `${canvaswd.width*rat}px`;
+    canvaswd.canvasElement.style.height = `${canvaswd.height*rat}px`;
+    fragment.appendChild(canvaswd.canvasElement);
+    prev = canvaswd.canvasElement;
+  }
+  return fragment;
+}
+function glyphToCanvas(draft, glyph) {
+  const glyphObjects = findGlyphGroup(draft, glyph);
+  const boundingBox = boundingBoxObjects(glyphObjects);
+  const origin = boundingBoxOrigin(boundingBox);
+  const width = (boundingBox["max-x"] - boundingBox["min-x"]);
+  const height = (boundingBox["max-y"] - boundingBox["min-y"]);
+  const path2ds = [];
+  for (const obj of glyphObjects) {
+    if (obj["type"] == "curved-surface") {
+      const points = []
+      for (const point of obj["points"]) {
+        const x = width/2 + (point["x"] - origin["x"]);
+        const y = (height/2) + (point["y"] - origin["y"]) * -1;
+        points.push([x, y]);
+      }
+      path2ds.push(createPath2d(points));
+    }
+  }
+  const canvasElement = createCanvasElement(width, height);
+  const canvasContext = canvasElement.getContext("2d");
+  canvasContext.fillStyle = "black";
+  for (const path2d of path2ds) {
+    canvasContext.fill(path2d);
+  }
+  return {canvasElement, width, height};
+}
 function getGroupContent(draft, groupId) {
   const groupContent = [];
   for (const obj of draft) {
