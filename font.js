@@ -55,7 +55,7 @@ function glyphToCanvas(draft, glyph) {
         const y = (height/2) + (point["y"] - origin["y"]) * -1;
         points.push([x, y]);
       }
-      path2ds.push(createPath2d(points));
+      path2ds.push(createPath2dLerp(points));
     }
   }
   const canvasElement = createCanvasElement(width, height);
@@ -154,8 +154,10 @@ function renderTextCanvas(draft, text, dpi) {
   const canvasElement = createCanvasElement(canvasWidth, canvasHeight);
   const canvasContext = canvasElement.getContext("2d");
   canvasContext.fillStyle = "black";
+  canvasContext.strokeStyle = "black";
   for (const path2d of path2ds) {
-    canvasContext.fill(path2d);
+    // canvasContext.fill(path2d);
+    canvasContext.stroke(path2d);
   }
   return canvasElement;
 }
@@ -332,6 +334,16 @@ function createCircle(x, y) {
   circle.setAttribute("fill", "black");
   return circle;
 }
+function createPath2dLerp(points) {
+  const path2d = new Path2D();
+  path2d.moveTo(points[0][0], points[0][1]);
+  bezierPath2d(path2d, xyz(points[0]), xyz(points[1]), xyz(points[2]), xyz(points[3]));
+  bezierPath2d(path2d, xyz(points[3]), xyz(points[9]), xyz(points[11]), xyz(points[7]));
+  bezierPath2d(path2d, xyz(points[7]), xyz(points[6]), xyz(points[5]), xyz(points[4]));
+  bezierPath2d(path2d, xyz(points[4]), xyz(points[10]), xyz(points[8]), xyz(points[0]));
+  return path2d;
+}
+function xyz(arr) {return {"x": arr[0], "y": arr[1], "z": 0}};
 function createPath2d(points) {
   const path2d = new Path2D();
   path2d.moveTo(points[0][0], points[0][1]);
@@ -352,4 +364,29 @@ function createPath(points) {
   polygon.setAttribute("d", d);
   polygon.setAttribute("fill", "black");
   return polygon;
+}
+function bezierPath2d(path2d, p0, p1, p2, p3) {
+  for (let i = 0; i < 1; i += 0.001) {
+    const p = bezier(i, p0, p1, p2, p3);
+    path2d.lineTo(p.x, p.y);
+  }
+}
+function bezier(t, p0, p1, p2, p3) {
+  const a = lerp(t, p0, p1);
+  const b = lerp(t, p1, p2);
+  const c = lerp(t, p2, p3);
+  const d = lerp(t, a, b);
+  const e = lerp(t, b, c);
+  const f = lerp(t, d, e);
+  return f;
+}
+function lerp(t, a, b) {
+   const dx = (b.x - a.x);
+   const dy = (b.y - a.y);
+   const dz = (b.z - a.z);
+   return {
+    "x": a.x + t * dx,
+    "y": a.y + t * dy,
+    "z": a.z + t * dz,
+   }
 }
