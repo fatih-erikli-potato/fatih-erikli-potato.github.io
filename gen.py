@@ -5,7 +5,11 @@ html = make_html_w_doctype(
   "styles": ["style.css"],
   "scripts": ["font.js"]},
   div({"class": "container"}),
-  div({"class": "render"}, img({"src": "cup-of-coffee.png", "width": "256px", "height": "256px"}))
+  div({"class": "render"},
+    #img({"src": "rakowicka.png", "width": "512px", "height": "512px"}),
+    #img({"src": "rakowicka-2x.png", "width": "512px", "height": "512px"}),
+    img({"src": "cup-of-coffee.png", "width": "512px", "height": "512px"}),
+  )
 )
 f.write(html)
 f.close()
