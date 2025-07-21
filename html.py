@@ -62,6 +62,7 @@ def make_html_w_doctype(attrs, *tag_definitions):
   html = "<!doctype html>"
   html += "<html>"
   html += "<head>"
+  html += '<meta name="viewport" content="width=device-width, initial-scale=1" />'
   if "styles" in attrs:
     for stylesheet_url in attrs["styles"]:
       # html += '<link rel="stylesheet" type="text/css" href="%s" />' % strip_quote(attrs["stylesheet_url"])

@@ -5,8 +5,8 @@ f = open("index.html", "w")
 heading = []
 heading_text = "Fatih Erikli"
 words = []
-words_text = "I am a software developer. I am from Karabük. Benim adım Fatih. Karabük'te yaşıyorum."
-scale = 0.011
+words_text = "I am a software developer. "
+scale = 0.015
 for w in words_text:
   if w == " ":
     glyphname = "space"
