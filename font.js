@@ -5,9 +5,10 @@ let draft;
 window.addEventListener("load", function () {
   const container = document.querySelector(".container");
   loadDraft().then(function (_draft) {
-    const draft = scaleDraft(_draft, 4);
-    container.appendChild(textToFragment(draft, "Fatih Erikli", 30, 3, 10));
-    container.appendChild(textToFragment(draft, `I am a software developer. I live in Karab${String.fromCharCode(252)}k. I am creating a 3d modeling software. Ben Fatih. Karab${String.fromCharCode(252)}k'te ya${String.fromCharCode(351)}${String.fromCharCode(305)}yorum. 3 boyutlu modelleme yaz${String.fromCharCode(305)}l${String.fromCharCode(305)}m${String.fromCharCode(305)} geli${String.fromCharCode(351)}tiriyorum.`, 20, 3, 6));
+    const draft = scaleDraft(_draft, 1);
+    const scale = 3;
+    container.appendChild(textToFragment(draft, "Fatih Erikli", 30*scale, 3*scale, 10*scale));
+    container.appendChild(textToFragment(draft, `I am a software developer. I live in Karab${String.fromCharCode(252)}k. I am creating a 3d modeling software. Ben Fatih. Karab${String.fromCharCode(252)}k'te ya${String.fromCharCode(351)}${String.fromCharCode(305)}yorum. 3 boyutlu modelleme yaz${String.fromCharCode(305)}l${String.fromCharCode(305)}m${String.fromCharCode(305)} geli${String.fromCharCode(351)}tiriyorum.`, 20*scale, 3*scale, 6*scale));
   });
 });
 function textToFragment(draft, text, txtheight, spaceinbetween, spacerwidth) {
