@@ -33,11 +33,11 @@ for w in heading_text:
     "alt": w,
     "src": glyph_png_relative_path}))
 html = make_html_w_doctype(
-  {"title": "Font Renderer", "favicon_url": "favicon.png",
+  {"title": "Fatih Erikli", "favicon_url": "favicon.png",
   "styles": ["style.css"],
   "scripts": []},
   div({"class": "container"},
-    div(*heading), div(*words)),
+    div(div({"class": "hide-text"}, heading_text), *heading), div(div({"class": "hide-text"}, words_text), *words)),
   div({"class": "render"},
     #img({"src": "rakowicka.png", "width": "512px", "height": "512px"}),
     #img({"src": "rakowicka-2x.png", "width": "512px", "height": "512px"}),
