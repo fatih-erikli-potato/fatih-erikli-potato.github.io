@@ -6,7 +6,7 @@ heading = []
 heading_text = "Fatih Erikli"
 words = []
 words_text = "I am a software developer. "
-scale = 0.015
+scale = 0.01
 for w in words_text:
   if w == " ":
     glyphname = "space"
