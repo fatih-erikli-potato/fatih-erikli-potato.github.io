@@ -6,7 +6,7 @@ heading = []
 heading_text = "Fatih Erikli"
 words = []
 words_text = "I am a software developer. "
-scale = 0.01
+scale = 0.02
 for w in words_text:
   if w == " ":
     glyphname = "space"
@@ -19,7 +19,7 @@ for w in words_text:
     "height": "{}".format(pngf.size[1]*scale),
     "alt": w,
     "src": glyph_png_relative_path}))
-scale = 0.02
+scale = 0.03
 for w in heading_text:
   if w == " ":
     glyphname = "space"
