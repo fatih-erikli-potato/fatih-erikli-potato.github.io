@@ -26,13 +26,13 @@ for filename in os.listdir(directory):
   filepath = os.path.join(directory, filename)
   image = Image.open(filepath)
   width, height = image.size
-  square = 10
+  square = 120
   for x in range(0, width-square, square):
     for y in range(0, height-square, square):
       r, g, b = avgrgb(image, x, y, square)
-      if (r + g + b)/3 > 50:
-        r, g, b = 255, 255, 255
-      else:
+      if (r + g + b)/3 < 200:
         r, g, b = 0, 0, 0
+      else:
+        r, g, b = 255, 255, 255
       putrgbsquare(image, x, y, square, (r, g, b))
   image.save(os.path.join("out", filename))
