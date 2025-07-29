@@ -1,56 +1,63 @@
-from html import make_html_w_doctype, div, img
+from html import make_html_w_doctype, div, img, a
 from PIL import Image
 import os
-f = open("index.html", "w")
-heading = []
-heading_text = "Fatih Erikli"
-texts_div = []
-texts = [
-"Just join Starbucks Rewards and enjoy a free drink with qualifying purchase during your first week.",
-"The dog in left is an award winning showdog named Arnie an AKC French Bulldog. The dog on the right is Flint, bred in Netherlands by hawbucks French bulldog, a breeder trying to establish a new, healtier template for French Bulldogs.",
-"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-"Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of de Finibus Bonorum et Malorum, The Extremes of Good and Evil by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, Lorem ipsum dolor sit amet.., comes from a line in section 1.10.32."
-]
-for words_text in texts:
-  words = []
-  scale = 0.012
-  for w in words_text:
+def get_text(text, scale):
+  imgs = []
+  for w in text:
     if w == " ":
       glyphname = "space"
     else:
-      glyphname = ord(w)
-    glyph_png_relative_path = "out/draft-{0}.png".format(glyphname)
+      glyphname = "{0}".format(ord(w))
+    glyph_png_relative_path = "glyph/draft-{0}.png".format(glyphname)
     pngf = Image.open(glyph_png_relative_path)
-    words.append(img({
+    imgs.append(img({
       "width": "{}".format(pngf.size[0]*scale),
       "height": "{}".format(pngf.size[1]*scale),
       "alt": w,
       "src": glyph_png_relative_path}))
-  texts_div.append(div(div({"class": "hide-text"}, words_text), *words))
-scale = 0.024
-for w in heading_text:
-  if w == " ":
-    glyphname = "space"
-  else:
-    glyphname = ord(w)
-  glyph_png_relative_path = "out/draft-{0}.png".format(glyphname)
-  pngf = Image.open(glyph_png_relative_path)
-  heading.append(img({
-    "width": "{}".format(pngf.size[0]*scale),
-    "height": "{}".format(pngf.size[1]*scale),
-    "alt": w,
-    "src": glyph_png_relative_path}))
-html = make_html_w_doctype(
-  {"title": "Fatih Erikli", "favicon_url": "favicon.png",
-  "styles": ["style.css"],
-  "scripts": []},
-  div({"class": "container"},
-    div(div({"class": "hide-text"}, heading_text), *heading), *texts_div),
-  div({"class": "render"},
-    #img({"src": "rakowicka.png", "width": "512px", "height": "512px"}),
-    #img({"src": "rakowicka-2x.png", "width": "512px", "height": "512px"}),
-    img({"src": "cup-of-coffee.png", "width": "512px", "height": "512px"}),
+  return imgs
+
+def get_posts():
+  f = open("thoughts", "r")
+  posts_d = f.read()
+  f.close()
+  posts = []
+  posts_d_split = posts_d.split("\n----\n")
+  for post_raw in posts_d_split:
+    first_breakline = post_raw.index("\n")
+    second_breakline = post_raw.index("\n", first_breakline+1)
+    title = post_raw[:first_breakline]
+    slug = post_raw[first_breakline+1:second_breakline]
+    content = post_raw[second_breakline+1:]
+    posts.append({"title": title, "slug": slug, "content": content})
+  return posts
+
+def write_html(filename, title, *content):
+  html = make_html_w_doctype(
+    {"title": title, "favicon_url": "favicon.png",
+    "styles": ["style.css"],
+    "scripts": []},
+    div({"class": "container"}, *content),
   )
-)
-f.write(html)
-f.close()
+  with open(filename, "w") as f:
+    f.write(html)
+
+posts = []
+posts = get_posts()
+posts_tags = []
+for post in posts:
+  posts_tags.append(
+    div(
+      a({"href": "{0}.html".format(post["slug"])}, *get_text(post["title"], 0.01))
+    )
+  )
+write_html("index.html", "THINKING OUT LOUD", div(
+  div({"class": "header"}, *get_text("THINKING OUT LOUD", 0.02)),
+  *posts_tags,
+))
+for post in posts:
+  write_html("{0}.html".format(post["slug"]), post["title"],
+    a({"href": "/"}, *get_text("home", 0.01)),
+    div({"class": "header"}, *get_text(post["title"], 0.02)),
+    div(*get_text(post["content"], 0.01))
+  )
