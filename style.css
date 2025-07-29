@@ -9,3 +9,9 @@
 .header {
   text-align: center;
 }
+.text-block {
+  overflow: hidden;
+}
+.text-block > div {
+  float: left;
+}
