@@ -43,6 +43,13 @@ def get_text_block(text, scale):
     fish_block.append(div({"width": "{0}px".format(int(fish["w"]))}, *fish["elements"]))
   return div({"class": "text-block"}, *fish_block)
 
+def get_text_paragraphs(text, scale):
+  ps = []
+  paragraphs = text.split("\n")
+  for paragraph in paragraphs:
+    ps.append(get_text_block(paragraph, scale))
+  return ps
+
 def get_posts():
   f = open("thoughts", "r")
   posts_d = f.read()
@@ -85,5 +92,5 @@ for post in posts:
   write_html("{0}.html".format(post["slug"]), post["title"],
     a({"href": "/"}, *get_text("home", 0.01)),
     div({"class": "header"}, *get_text(post["title"], 0.02)),
-    get_text_block(post["content"], 0.01)
+    *get_text_paragraphs(post["content"], 0.01)
   )
