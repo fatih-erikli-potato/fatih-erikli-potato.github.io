@@ -8,9 +8,7 @@ I think it isn't a format. It is what it is. Domains are dot separated, URLs are
 ----
 Interpolating a bezier curve
 interpolating-a-bezier-curve
-It is difficult to implement an interpolation of a bezier curve without seeing how it is actually works. It requires too much attention to understand what is really happenning there. It is also difficult to find a clean implementation if you google that. You will most likely find an obfuscated version of a written clean code.
-
-So I am sharing a whole food with you.
+It is difficult to implement an interpolation of a bezier curve without seeing how it actually works. It requires too much attention to understand what is really happenning there. It is also difficult to find a clean implementation if you google that. You will most likely find an obfuscated version of a written clean code. So I am sharing a whole food with you.
  
 
 - code -
