@@ -29,7 +29,7 @@ named_tokens = {
   ":": "colon",
   "@": "decorator",
 }
-quote_escape = "\\"
+quote_escape = chr(92)
 reserved_identifiers = ["None", "True", "False"]
 
 def seek_new_token():
