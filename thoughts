@@ -15,7 +15,7 @@ So I am sharing a whole food with you.
 
 - code -
 def lerp(t, a, b):
-  dx = b["xabcdefg"] - a["x"]
+  dx = b["x"] - a["x"]
   dy = b["y"] - a["y"]
   dz = b["z"] - a["z"]
   return {
