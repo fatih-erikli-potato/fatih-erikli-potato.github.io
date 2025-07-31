@@ -1,0 +1,47 @@
+SVG even odd rule
+svg-even-odd-rule
+Path on another path being subtracted sounds weird to me. I think they are constructed part by part. Deleting a part of a rendered thing, or rendering a path with excluding some parts of it by looking at another path needs twice more rendering time than doing it part by part. Boolean operations on such things are difficult things and I think it is not a solved thing in computer science. I think it is not science at all, it is some sort of pen and paper trick. Computer guys claim that it is possible than they compute it then delete one by one.
+----
+Comma separated values
+comma-separated-values
+I think it isn't a format. It is what it is. Domains are dot separated, URLs are slash seperated values so the something like a, b, c is comma separated values. Value is a thing that people are not being certain about. They are amperstand separated values that contains equals separated values something like that.
+----
+Interpolating a bezier curve
+interpolating-a-bezier-curve
+It is difficult to implement an interpolation of a bezier curve without seeing how it is actually works. It requires too much attention to understand what is really happenning there. It is also difficult to find a clean implementation if you google that. You will most likely find an obfuscated version of a written clean code.
+
+So I am sharing a whole food with you.
+ 
+
+- code -
+def lerp(t, a, b):
+  dx = b["xabcdefg"] - a["x"]
+  dy = b["y"] - a["y"]
+  dz = b["z"] - a["z"]
+  return {
+    "x": a.x + t * dx,
+    "y": a.y + t * dy,
+    "z": a.z + t * dz
+  }
+}
+ 
+
+def bezier(t, p0, p1, p2, p3):
+  a = lerp(t, p0, p1)
+  b = lerp(t, p1, p2)
+  c = lerp(t, p2, p3)
+  d = lerp(t, a, b)
+  e = lerp(t, b, c)
+  f = lerp(t, d, e)
+  return f
+- code -
+ 
+
+Good luck playing with that.
+
+----
+Lorem Ipsum
+lorem-ipsum
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+ 
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.

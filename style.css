@@ -9,9 +9,16 @@
 .header {
   text-align: center;
 }
-.text-block {
+.text-block, .code-block {
   overflow: hidden;
 }
-.text-block > div {
+.text-block > div, .code-block > div {
   float: left;
 }
+.masked {
+  background-color: black;
+}
+.reserved { background-color: rgb(155, 52, 52);}
+.number, .reserved-identifier {background-color: rgb(34, 34, 166);}
+.string {background-color: rgb(6, 124, 89);}
+.comment {background-color: gray;}

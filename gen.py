@@ -1,4 +1,5 @@
-from html import make_html_w_doctype, div, img, a
+from html import make_html_w_doctype, div, img, a, iframe
+from syntax_highlighter import tokenize
 from PIL import Image
 import os
 def get_text(text, scale):
@@ -17,7 +18,7 @@ def get_text(text, scale):
       "src": glyph_png_relative_path}))
   return imgs
 
-def get_text_block(text, scale):
+def get_text_block(text, scale, dir_="glyph"):
   imgs = []
   fish = {"elements": [], "w": 0}
   fishes = [fish]
@@ -26,28 +27,93 @@ def get_text_block(text, scale):
       glyphname = "space"
     else:
       glyphname = "{0}".format(ord(w))
-    glyph_png_relative_path = "glyph/draft-{0}.png".format(glyphname)
+    glyph_png_relative_path = "{0}/draft-{1}.png".format(dir_, glyphname)
     pngf = Image.open(glyph_png_relative_path)
     wid = pngf.size[0]*scale
     fish["w"] += wid
-    fish["elements"].append(img({
+    imgattrs = {
       "width": "{0}px".format(int(wid)),
       "height": "{0}px".format(int(pngf.size[1]*scale)),
       "alt": w,
-      "src": glyph_png_relative_path}))
+      "src": glyph_png_relative_path}
+    fish["elements"].append(img(imgattrs))
     if w == " ":
       fish = {"elements": [], "w": 0}
       fishes.append(fish)
   fish_block = []
   for fish in fishes:
-    fish_block.append(div({"width": "{0}px".format(int(fish["w"]))}, *fish["elements"]))
+    fish_block.append(div({"style": {"width": "{0}px".format(int(fish["w"]))}}, *fish["elements"]))
   return div({"class": "text-block"}, *fish_block)
+
+def get_code_line_block(text, scale, tokens, line_starts_at):
+  imgs = []
+  fish = {"elements": [], "w": 0}
+  fishes = [fish]
+  i = 0
+  for w in text:
+    if w == " ":
+      glyphname = "space"
+    else:
+      glyphname = "{0}".format(ord(w))
+    glyph_png_relative_path = "monospace-masked/draft-{0}.png".format(glyphname)
+    pngf = Image.open(glyph_png_relative_path)
+    wid = pngf.size[0]*scale
+    token = seek_token_by_char_index(tokens, line_starts_at + i)
+    fish["w"] += wid
+    imgattrs = {
+      "class": ["masked"],
+      "width": "{0}px".format(int(wid)),
+      "height": "{0}px".format(int(pngf.size[1]*scale)),
+      "alt": w,
+      "src": glyph_png_relative_path}
+    if token:
+      imgattrs["class"].append(token["type"])
+    fish["elements"].append(img(imgattrs))
+    if w == " ":
+      fish = {"elements": [], "w": 0}
+      fishes.append(fish)
+    i += 1
+  fish_block = []
+  for fish in fishes:
+    fish_block.append(div({"style": {"width": "{0}px".format(int(fish["w"]))}}, *fish["elements"]))
+  return div({"class": "code-block"}, *fish_block)
+
+def seek_token_by_char_index(tokens, char_index):
+  for token in tokens:
+    if char_index >= token["starts"] and char_index < token["ends"]:
+      return token
+
+def get_code_block(text, scale):
+  tokens = tokenize(text)
+  ps = []
+  line_starts_at = 0
+  for line in text.split("\n"):
+    ps.append(get_code_line_block(line, scale, tokens, line_starts_at))
+    line_starts_at += len(line) + 1
+  return ps
 
 def get_text_paragraphs(text, scale):
   ps = []
   paragraphs = text.split("\n")
+  seek_code = False
+  
+  index_at_text = 0
+  code = ""
   for paragraph in paragraphs:
-    ps.append(get_text_block(paragraph, scale))
+    if paragraph == "- code -":
+      if seek_code:
+        ps.extend(get_code_block(code, scale))
+        seek_code = False
+        code = ""
+      else:
+        seek_code = True
+      continue
+    else:
+      if seek_code:
+        code += paragraph + "\n"
+      else:
+        ps.append(get_text_block(paragraph, scale))
+    index_at_text += len(paragraph) + 1
   return ps
 
 def get_posts():

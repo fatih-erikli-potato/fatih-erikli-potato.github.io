@@ -83,7 +83,7 @@ def make_html_w_doctype(attrs, *tag_definitions):
   html += "</html>"
   return html
 
-allowed_tags = ["form", "div", "label", "input", "a", "img", "svg", "polygon", "br", "script", "span", "link"]
+allowed_tags = ["form", "div", "label", "input", "a", "img", "svg", "polygon", "br", "script", "span", "link", "iframe"]
 self_closing_tags = ["br", "link", "img"]
 allowed_attrs = ["src", "style", "class", "alt", "href", "action", "disabled", "rel",
                  "method", "type", "value", "width", "height", "points", "stroke", "fill", "xmlns", "enctype", "name"]
@@ -134,3 +134,4 @@ def input(*args): return ['input', *args]
 def a(*args): return ['a', *args]
 def svg(*args): return ['svg', *args]
 def polygon(*args): return ['polygon', *args]
+def iframe(*args): return ['iframe', *args]
