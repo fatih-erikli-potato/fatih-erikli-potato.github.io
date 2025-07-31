@@ -30,7 +30,7 @@ def get_text_block(text, scale, dir_="glyph"):
     glyph_png_relative_path = "{0}/draft-{1}.png".format(dir_, glyphname)
     pngf = Image.open(glyph_png_relative_path)
     wid = pngf.size[0]*scale
-    fish["w"] += wid
+    fish["w"] += int(wid)
     imgattrs = {
       "width": "{0}px".format(int(wid)),
       "height": "{0}px".format(int(pngf.size[1]*scale)),
@@ -59,7 +59,7 @@ def get_code_line_block(text, scale, tokens, line_starts_at):
     pngf = Image.open(glyph_png_relative_path)
     wid = pngf.size[0]*scale
     token = seek_token_by_char_index(tokens, line_starts_at + i)
-    fish["w"] += wid
+    fish["w"] += int(wid)
     imgattrs = {
       "class": ["masked"],
       "width": "{0}px".format(int(wid)),
