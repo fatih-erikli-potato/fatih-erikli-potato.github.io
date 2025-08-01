@@ -15,7 +15,7 @@ quotes = ["'", '"']
 nums = "0123456789"
 abc = "abcdefghijklmnoprstuvyzwxq"
 abc += abc.upper() + "_"
-operators = ["=", "<", ">", "+", "-", "=", "/", "*", "?", "<=", ">=", "==", "!=", "%"]
+operators = ["=", "<", ">", "+", "-", "=", "/", "*", "?", "<=", ">=", "==", "!", "!=", "%"]
 named_tokens = {
   ",": "comma",
   ".": "dot",

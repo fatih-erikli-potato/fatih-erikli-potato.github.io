@@ -2,7 +2,6 @@ Syntax highlighting in Python
 syntax-highlighting-in-python
 I created a syntax highlighter to make my codes looking colorful in my blog. It is written in Python, so it does not require a Javascript code when the page is loaded. It is useful when you create html pages for documentation or a blog. Instead of making it packaged, I share the code piece, so it will be easer to modify when you find something missing.
  
-
 - code -
 reserved = [
 "if", "elif", "else",
@@ -169,10 +168,3 @@ def bezier(t, p0, p1, p2, p3):
  
 
 Good luck playing with that.
-
-----
-Lorem Ipsum
-lorem-ipsum
-Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
- 
-Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
