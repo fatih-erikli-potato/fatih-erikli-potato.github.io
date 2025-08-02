@@ -151,6 +151,8 @@ for post in posts:
     )
   )
 write_html("index.html", "THINKING OUT LOUD", div(
+  div({"class": "header"}, *get_text("HI, I AM FATIH ERIKLI", 0.02)),
+  *get_text("I am a software developer.", 0.01),
   div({"class": "header"}, *get_text("THINKING OUT LOUD", 0.02)),
   *posts_tags,
 ))
