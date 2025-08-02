@@ -146,19 +146,19 @@ posts = get_posts()
 posts_tags = []
 for post in posts:
   posts_tags.append(
-    div(
+    div({"class": "text-block"},
       a({"href": "{0}.html".format(post["slug"])}, *get_text(post["title"], 0.01))
     )
   )
 write_html("index.html", "THINKING OUT LOUD", div(
   div({"class": "header"}, *get_text("HI, I AM FATIH ERIKLI", 0.02)),
-  *get_text("I am a software developer.", 0.01),
+  div({"class": "text-block"}, *get_text("I am a software developer.", 0.01)),
   div({"class": "header"}, *get_text("THINKING OUT LOUD", 0.02)),
   *posts_tags,
 ))
 for post in posts:
   write_html("{0}.html".format(post["slug"]), post["title"],
-    a({"href": "/"}, *get_text("home", 0.01)),
+    div({"class": "text-block"}, a({"href": "/"}, *get_text("home", 0.01))),
     div({"class": "header"}, *get_text(post["title"], 0.02)),
     *get_text_paragraphs(post["content"], 0.01)
   )

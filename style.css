@@ -10,6 +10,10 @@
   text-align: center;
   padding: 20px 0;
 }
+.header img {
+  background-color: black;
+}
+.text-block img {background-color: black;}
 .text-block, .code-block {
   overflow: hidden;
 }
@@ -23,3 +27,6 @@
 .number, .reserved-identifier {background-color: rgb(34, 34, 166);}
 .string {background-color: rgb(6, 124, 89);}
 .comment {background-color: gray;}
+.container {
+  padding: 10px 20px;
+}
