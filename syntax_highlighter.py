@@ -26,8 +26,7 @@ named_tokens = {
   "{": "curly_begin",
   "}": "curly_end",
   ";": "semicolon",
-  ":": "colon",
-  "@": "decorator",
+  ":": "colon"
 }
 quote_escape = chr(92)
 reserved_identifiers = ["None", "True", "False"]

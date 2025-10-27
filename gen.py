@@ -2,6 +2,7 @@ from html import make_html_w_doctype, div, img, a, iframe
 from syntax_highlighter import tokenize
 from PIL import Image
 import os
+
 def get_text(text, scale):
   imgs = []
   for w in text:
@@ -92,28 +93,40 @@ def get_code_block(text, scale):
     line_starts_at += len(line) + 1
   return ps
 
+class keygetter(dict):
+  def __getitem__(self, key):
+    dirname = os.path.dirname(__file__)
+    filepath = os.path.join(dirname, key)
+    return open(filepath, "r").read()
+
 def get_text_paragraphs(text, scale):
   ps = []
+  text = (text % keygetter())
   paragraphs = text.split("\n")
   seek_code = False
-  
-  index_at_text = 0
+
   code = ""
   for paragraph in paragraphs:
-    if paragraph == "- code -":
+    if paragraph.startswith("image:"):
+      path = paragraph[len("image:"):]
+      ps.append(div({"class": "image-block"}, img({
+        "width": 512,
+        "height": 512,
+        "alt": path,
+        "src": path
+      })))
+    elif paragraph == "- code -":
       if seek_code:
         ps.extend(get_code_block(code, scale))
         seek_code = False
         code = ""
       else:
         seek_code = True
-      continue
     else:
       if seek_code:
         code += paragraph + "\n"
       else:
         ps.append(get_text_block(paragraph, scale))
-    index_at_text += len(paragraph) + 1
   return ps
 
 def get_posts():

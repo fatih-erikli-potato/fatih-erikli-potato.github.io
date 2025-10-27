@@ -1,121 +1,106 @@
+Rendering a bezier surface
+rendering-a-bezier-surface
+Previously I wrote a blog post about how to interpolate a bezier curve. A bezier curve helps us to create smooth lines, surfaces, type faces. A bezier surface is set of bezier curves that is used for imaging a part of something. Before rendering a bezier surface, I will mention about how to render something with Python programming language. I will demonstrate it by rendering a set of cubes, then I will create marbles that made of cubes. A marble will stay at position of an interpolated point of a bezier curve. I will create an optimized cube for making the drawing process easier. Skipping the not visible parts may affect the glass-like surfaces, but I am willing to create only solid things.
+ 
+- code -
+%(examples/create_cube.py)s
+- code -
+ 
+The function returns a diamond shape. Set of diamond shapes, ordered in correct way, will be painted to an image file in Python or to a canvas on a browser. Vertically minus degrees are facing upwards. The visible faces must be set in correct order. It is possible to do that by ordering faces by their average z-index, but I prefer not to complicate that process further. Z-sort will be used for sorting the cubes.
+ 
+- code -
+%(examples/rotate.py)s
+- code -
+ 
+A rotate function that rotates x-z horizontally, then y-z in vertical axis will be needed.
+ 
+- code -
+%(examples/xyz_on_canvas.py)s
+- code -
+ 
+A point in three-d should be rotated first. The values x-y will be the position on canvas. On canvas, the when the y is getting higher, it means it is being drawn to the end of canvas in vertical. So the height should be inreversed. I also scale them with a multipier in order to see the cube's borders. At the end, the scale may be minimized as less as possible. So the cubes won't be visible in result.
+ 
+- code -
+%(examples/darken.py)s
+- code -
+ 
+A darken function like above will be needed in order to make the cube visually differentiable.
+ 
+- code -
+%(examples/render-1.py)s
+- code -
+ 
+I am using Python's PIL library for drawing in two-d. The render will be looking like below when we run it.
+ 
+- code -
+%(examples/render.py)s
+- code -
+ 
+The unit of width and height will be cubes.
+
+image:examples/render-1.png
+ 
+Unit scale is too much for demonstration purpuse. It will be very less when using the cubes to create something that looks like not made of cubes. A bezier surface will be rendered with balls that mades of cubes.
+ 
+- code -
+%(examples/ball.py)s
+- code -
+ 
+It is very easy to create a ball when we think a ball's radius is the distance to the origin in a three-d space. The ball will be created in that way, starting at 0, 0, 0 origin.
+ 
+- code -
+%(examples/render-2.py)s
+- code -
+ 
+The result will be this.
+ 
+image:examples/render-2.png
+ 
+A bezier surface is made of four bezier curves. Lets try to render a single bezier curve and complete the render process first.
+ 
+- code -
+%(examples/render-3.py)s
+- code -
+ 
+Cubes are sorted in their rendering order after the bezier evaluation.
+ 
+image:examples/render-3.png
+
+Each interpolated point in four bezier curves, will be used for creating another curve. So in that way it will be possible shape a solid surface. A surface in this example has four curves and two properties, wide and fall. Wide is the one is longing, and fall is the curve that created by interpolated points.
+ 
+- code -
+%(examples/render-4.py)s
+- code -
+ 
+The result is looking like this.
+ 
+image:examples/render-4-1.png
+ 
+Here is when the fall is higher than the wide.
+ 
+image:examples/render-4-2.png
+ 
+When they are both higher, the surface will be visible.
+ 
+image:examples/render-4-3.png
+ 
+I keep the rendering part in Python. I edit the surfaces by an application that runs on a browser written with javascript when I am creating something. Here are some examples that I rendered in this way.
+
+image:examples/pan-w-eggs-done.png
+ 
+image:examples/cooktop.png
+ 
+image:examples/mushroom.png
+
+Good luck playing with that.
+
+----
 Syntax highlighting in Python
 syntax-highlighting-in-python
 I created a syntax highlighter to make my codes looking colorful in my blog. It is written in Python, so it does not require a Javascript code when the page is loaded. It is useful when you create html pages for documentation or a blog. Instead of making it packaged, I share the code piece, so it will be easer to modify when you find something missing.
  
 - code -
-reserved = [
-"if", "elif", "else",
-"while", "for",
-"def", "return", "global",
-"import", "from",
-"continue", "break",
-"del",
-"in", "not", "or", "and", "is",
-"raise",
-"class",
-]
-breakline = "\n"
-space = " "
-quotes = ["'", '"']
-nums = "0123456789"
-abc = "abcdefghijklmnoprstuvyzwxq"
-abc += abc.upper() + "_"
-operators = ["=", "<", ">", "+", "-", "=", "/", "*", "?", "<=", ">=", "==", "!=", "%"]
-named_tokens = {
-  ",": "comma",
-  ".": "dot",
-  "[": "bracked_begin",
-  "]": "bracket_end",
-  "(": "paran_begin",
-  ")": "paran_end",
-  "{": "curly_begin",
-  "}": "curly_end",
-  ";": "semicolon",
-  ":": "colon"
-}
-quote_escape = chr(92)
-reserved_identifiers = ["None", "True", "False"]
-
-def seek_new_token():
-  i = tokenizer["i"]
-  if tokenizer["char"] in quotes:
-    tokenizer["current_quote"] = tokenizer["char"]
-    tokenizer["token"] = {"type": "string", "starts": i, "ends": i+1}
-    tokenizer["tokens"].append(tokenizer["token"])
-  elif tokenizer["char"] in operators:
-    tokenizer["token"] = {"type": "operator", "starts": i, "ends": i+1}
-    tokenizer["tokens"].append(tokenizer["token"])
-  elif tokenizer["char"] in nums:
-    tokenizer["token"] = {"type": "number", "starts": i, "ends": i+1}
-    tokenizer["tokens"].append(tokenizer["token"])
-  elif tokenizer["char"] in abc:
-    tokenizer["token"] = {"type": "identifier", "starts": i, "ends": i+1}
-    tokenizer["tokens"].append(tokenizer["token"])
-  elif tokenizer["char"] in named_tokens:
-    tokenizer["tokens"].append({"type": named_tokens[tokenizer["char"]], "starts": i, "ends": i+1})
-  elif tokenizer["char"] == "#":
-    tokenizer["token"] = {"type": "comment", "starts": i, "ends": i+1}
-    tokenizer["tokens"].append(tokenizer["token"])
-
-tokenizer = {
-  "i": 0,
-  "current_quote": None,
-  "token": None,
-  "tokens": [],
-  "char": None
-}
-
-def reset():
-  tokenizer["i"] = 0
-  tokenizer["current_quote"] = None
-  tokenizer["token"] = None
-  tokenizer["tokens"] = []
-  tokenizer["char"] = None
-
-def tokenize(text):
-  reset()
-  while tokenizer["i"] < len(text):
-    tokenizer["char"] = text[tokenizer["i"]]
-    if tokenizer["token"]:
-      token_next = text[tokenizer["token"]["starts"]: tokenizer["i"]+1]
-      if tokenizer["token"]["type"] == "string":
-        tokenizer["token"]["ends"] += 1
-        if tokenizer["char"] == tokenizer["current_quote"] and text[tokenizer["i"]-1] != quote_escape:
-          tokenizer["token"] = None
-          tokenizer["current_quote"] = None
-      elif tokenizer["token"]["type"] == "operator":
-        if token_next in operators:
-          tokenizer["token"]["ends"] += 1
-        else:
-          tokenizer["token"] = None
-          seek_new_token()
-      elif tokenizer["token"]["type"] == "number":
-        if tokenizer["char"] in nums:
-          tokenizer["token"]["ends"] += 1
-        else:
-          tokenizer["token"] = None
-          seek_new_token()
-      elif tokenizer["token"]["type"] in ("identifier", "reserved", "reserved-identifier"):
-        if tokenizer["char"] in abc or tokenizer["char"] in nums:
-          tokenizer["token"]["ends"] += 1
-          if token_next in reserved_identifiers:
-            tokenizer["token"]["type"] = "reserved-identifier"
-          elif token_next in reserved:
-            tokenizer["token"]["type"] = "reserved"
-          else:
-            tokenizer["token"]["type"] = "identifier"
-        else:
-          tokenizer["token"] = None
-          seek_new_token()
-      elif tokenizer["token"]["type"] == "comment":
-        if tokenizer["char"] == "\n":
-          tokenizer["token"] = None
-        else:
-          tokenizer["token"]["ends"] += 1
-    else:
-      seek_new_token()
-    tokenizer["i"] += 1
-  return tokenizer["tokens"]
+%(syntax_highlighter.py)s
 - code -
  
 
@@ -128,7 +113,7 @@ def seek_token_by_char_index(tokens, char_index):
       return token
 - code -
 
-Good luck.
+Good luck playing with that.
 ----
 SVG even odd rule
 svg-even-odd-rule
@@ -165,6 +150,3 @@ def bezier(t, p0, p1, p2, p3):
   f = lerp(t, d, e)
   return f
 - code -
- 
-
-Good luck playing with that.
