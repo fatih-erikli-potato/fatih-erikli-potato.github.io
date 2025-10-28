@@ -10,7 +10,7 @@ def get_text(text, scale):
       glyphname = "space"
     else:
       glyphname = "{0}".format(ord(w))
-    glyph_png_relative_path = "glyph/draft-{0}.png".format(glyphname)
+    glyph_png_relative_path = "glyph-resized/draft-{0}.png".format(glyphname)
     pngf = Image.open(glyph_png_relative_path)
     imgs.append(img({
       "width": "{}".format(int(pngf.size[0]*scale)),
@@ -19,7 +19,7 @@ def get_text(text, scale):
       "src": glyph_png_relative_path}))
   return imgs
 
-def get_text_block(text, scale, dir_="glyph"):
+def get_text_block(text, scale, dir_="glyph-resized"):
   imgs = []
   fish = {"elements": [], "w": 0}
   fishes = [fish]
@@ -56,7 +56,7 @@ def get_code_line_block(text, scale, tokens, line_starts_at):
       glyphname = "space"
     else:
       glyphname = "{0}".format(ord(w))
-    glyph_png_relative_path = "monospace-masked/draft-{0}.png".format(glyphname)
+    glyph_png_relative_path = "monospace-masked-resized/draft-{0}.png".format(glyphname)
     pngf = Image.open(glyph_png_relative_path)
     wid = pngf.size[0]*scale
     token = seek_token_by_char_index(tokens, line_starts_at + i)
@@ -160,18 +160,18 @@ posts_tags = []
 for post in posts:
   posts_tags.append(
     div({"class": "text-block"},
-      a({"href": "{0}.html".format(post["slug"])}, *get_text(post["title"], 0.01))
+      a({"href": "{0}.html".format(post["slug"])}, *get_text(post["title"], 0.05))
     )
   )
 write_html("index.html", "THINKING OUT LOUD", div(
-  div({"class": "header"}, *get_text("HI, I AM FATIH ERIKLI", 0.02)),
-  div({"class": "text-block"}, *get_text("I am a software developer.", 0.01)),
-  div({"class": "header"}, *get_text("THINKING OUT LOUD", 0.02)),
+  div({"class": "header"}, *get_text("HI, I AM FATIH ERIKLI", 0.1)),
+  div({"class": "text-block"}, *get_text("I am a software developer.", 0.05)),
+  div({"class": "header"}, *get_text("THINKING OUT LOUD", 0.1)),
   *posts_tags
 ))
 for post in posts:
   write_html("{0}.html".format(post["slug"]), post["title"],
-    div({"class": "text-block"}, a({"href": "/"}, *get_text("home", 0.01))),
-    div({"class": "header"}, *get_text(post["title"], 0.02)),
-    *get_text_paragraphs(post["content"], 0.01)
+    div({"class": "text-block"}, a({"href": "/"}, *get_text("home", 0.05))),
+    div({"class": "header"}, *get_text(post["title"], 0.1)),
+    *get_text_paragraphs(post["content"], 0.05)
   )
