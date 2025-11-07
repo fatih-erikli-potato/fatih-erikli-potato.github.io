@@ -1,6 +1,6 @@
 Rendering a bezier surface
 rendering-a-bezier-surface
-Previously I wrote a blog post about how to interpolate a bezier curve. A bezier curve helps us to create smooth lines, surfaces, type faces. A bezier surface is set of bezier curves that is used for imaging a part of something. Before rendering a bezier surface, I will mention about how to render something with Python programming language. I will demonstrate it by rendering a set of cubes, then I will create marbles that made of cubes. A marble will stay at position of an interpolated point of a bezier curve. I will create an optimized cube for making the drawing process easier. Skipping the not visible parts may affect the glass-like surfaces, but I am willing to create only solid things.
+Previously I wrote a blog post about how to interpolate a bezier curve. A bezier curve helps us to create smooth lines, surfaces, type faces. A bezier surface is set of bezier curves that is used for imaging a part of something. Before rendering a bezier surface, I will mention about how to render something with Python programming language. I will demonstrate it by rendering a set of cubes, then I will create marbles that made of cubes. A marble will stay at position of an interpolated point of a bezier curve. I will create an optimized cube for making the drawing process easier. Skipping the not visible parts may affect glass-like surfaces in result, but I am willing to create only solid things.
  
 - code -
 %(examples/create_cube.py)s
@@ -24,7 +24,7 @@ A point in three-d should be rotated first. The values x-y will be the position 
 %(examples/darken.py)s
 - code -
  
-A darken function like above will be needed in order to make the cube visually differentiable.
+A darken function like above will be needed in order to make a cube's faces visually differentiable.
  
 - code -
 %(examples/render-1.py)s
@@ -88,9 +88,9 @@ I keep the rendering part in Python. I edit the surfaces by an application that 
 
 image:examples/pan-w-eggs-done.png
  
-image:examples/hot-dog.png
+image:examples/sandwich.png
  
-image:examples/mushroom.png
+image:examples/sandwich1x.png
  
 Good luck playing with that.
 

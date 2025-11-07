@@ -21,7 +21,8 @@ for curve in surface:
     p[2] *= scale_surface
 
 wide = 200
-fall = 10
+fall = 200
+ball_size = 8
 
 for w in range(0, wide):
   wa = bezier(w/wide, surface[0][0], surface[0][1], surface[0][2], surface[0][3])
@@ -30,7 +31,7 @@ for w in range(0, wide):
   wd = bezier(w/wide, surface[3][0], surface[3][1], surface[3][2], surface[3][3])
   for f in range(0, fall):
     px, py, pz = bezier(f/fall, wa, wb, wc, wd)
-    for x, y, z in create_ball(5):
+    for x, y, z in create_ball(ball_size):
       cubes.append([px + x, py + y, pz + z, 255, 255, 255])
 
 def zsort(cube):
@@ -40,7 +41,7 @@ def zsort(cube):
 cubes.sort(key=zsort)
 
 render(
-  "render-4-1",
+  "render-4-3",
   cubes,
   1024,
   1024,
