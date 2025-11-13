@@ -1,6 +1,6 @@
 Rendering a bezier surface
 rendering-a-bezier-surface
-Previously I wrote a blog post about how to interpolate a bezier curve. A bezier curve helps us to create smooth lines, surfaces, type faces. A bezier surface is set of bezier curves that is used for imaging a part of something. Before rendering a bezier surface, I will mention about how to render something with Python programming language. I will demonstrate it by rendering a set of cubes, then I will create marbles that made of cubes. A marble will stay at position of an interpolated point of a bezier curve. I will create an optimized cube for making the drawing process easier. Skipping the not visible parts may affect glass-like surfaces in result, but I am willing to create only solid things.
+Previously I wrote a blog post about how to interpolate a bezier curve. A bezier curve helps us to create smooth lines, surfaces, type faces. A bezier surface is set of bezier curves that is used for imaging a part of something. Before rendering a bezier surface, I will mention about how to render something with Python programming language. I will demonstrate it by rendering a set of cubes, then I will create marbles that made of cubes. A marble will stay at position of an interpolated point of a bezier curve. I will create an optimized cube for making the drawing process easier.
  
 - code -
 %(examples/create_cube.py)s
