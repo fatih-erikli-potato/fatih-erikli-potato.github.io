@@ -4,7 +4,7 @@ from darken import darken
  
 from PIL import Image, ImageDraw
  
-def render(name, cubes, width, height, unit_scale, rotate_horizontal, rotate_vertical):
+def render(name, cubes, width, height, unit_scale, rotate_horizontal, rotate_vertical, save=True):
   width *= unit_scale
   height *= unit_scale
   image = Image.new("RGB", (width, height), (255, 255, 255))
@@ -17,4 +17,6 @@ def render(name, cubes, width, height, unit_scale, rotate_horizontal, rotate_ver
         x, y = xyz_on_canvas(xx, yy, zz, unit_scale, width, height, rotate_horizontal, rotate_vertical)
         points.append((x, y))
       draw.polygon(points, darken(r, g, b, darken_percent))
-  image.save(open("{}.png".format(name), "wb"), "PNG")
+  if save:
+    image.save(open("{}.png".format(name), "wb"), "PNG")
+  return image

@@ -94,8 +94,15 @@ In that way we will get rid of sparse dots when rendering something.
 
 image:examples/render-5.png
 
+Next step, instead of showing the faces with balls made of cubes, finding the shading of a face by getting the average color of rendered cubes. I tried that it works well, however I like cube rendered faces more than this one. It may be possible to find shading of a face, without need to render them with cubes first, but I am afraid of doing that math. This is a painters way to draw something on canvas, I prefer this way of rendering. Math stuff is not easy as it is written on black-white blackboard, and most likely the result is going to be disappointment.
 
-The render part is written in Python language. I edit the surfaces by an application that runs on a browser written with javascript when I am creating something. Here are some examples that I rendered in this way.
+image:examples/render-6.png
+ 
+- code -
+%(examples/render-6.py)s
+- code -
+ 
+The render part is written in Python language. I edit the surfaces by an application that runs on a browser written with javascript when I am creating something. Here are some examples that I rendered in this way, with cubes.
  
 image:examples/balconykarmelicka.png
  
