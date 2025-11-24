@@ -84,10 +84,22 @@ When they are both higher, the surface will be visible.
  
 image:examples/render-4-3.png
 
-Keeping the wide and tall parameters less, drawing lines between sparse points with their segments calculated by their distance may give better results. I leave it as it looks like now.
+Keeping the wide and tall parameters less, drawing lines between sparse points with their segments calculated by their distance may give better results. Lets try that.
  
+- code -
+%(examples/render-5.py)s
+- code -
+
+In that way we will get rid of sparse dots when rendering something.
+
+image:examples/render-5.png
+
 
 The render part is written in Python language. I edit the surfaces by an application that runs on a browser written with javascript when I am creating something. Here are some examples that I rendered in this way.
+ 
+image:examples/balconykarmelicka.png
+ 
+image:examples/sink.png
 
 image:examples/pan-w-eggs-done.png
  

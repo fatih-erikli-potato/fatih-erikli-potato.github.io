@@ -1,7 +1,6 @@
 from render import render
 from ball import create_ball
 from bezier import bezier
-import math
 
 cubes = []
 
