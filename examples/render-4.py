@@ -21,7 +21,7 @@ for curve in surface:
 
 wide = 200
 fall = 200
-ball_size = 8
+ball_size = 2
 
 for w in range(0, wide):
   wa = bezier(w/wide, surface[0][0], surface[0][1], surface[0][2], surface[0][3])

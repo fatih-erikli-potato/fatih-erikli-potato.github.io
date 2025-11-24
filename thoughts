@@ -72,7 +72,7 @@ Each interpolated point in four bezier curves, will be used for creating another
 %(examples/render-4.py)s
 - code -
  
-The result is looking like this.
+The result is looking like this when the wide way more than fall.
  
 image:examples/render-4-1.png
  
