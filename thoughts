@@ -6,7 +6,7 @@ Previously I wrote a blog post about how to interpolate a bezier curve. A bezier
 %(examples/create_cube.py)s
 - code -
  
-The function returns a diamond shape. Set of diamond shapes, ordered in correct way, will be painted to an image file in Python or to a canvas on a browser. Vertically minus degrees are facing upwards. The visible faces must be set in correct order. It is possible to do that by ordering faces by their average z-index, but I prefer not to complicate that process further. Z-sort will be used for sorting the cubes.
+The function returns diamond shapes. Set of diamond shapes, ordered in correct way, will be painted to an image file in Python or to a canvas on a browser. Vertically minus degrees are facing upwards. The visible faces must be set in correct order. It is possible to do that by ordering faces by their average z-index, but I prefer not to complicate that process further. Z-sort will be used for sorting the cubes.
  
 - code -
 %(examples/rotate.py)s
@@ -66,7 +66,7 @@ Cubes are sorted in their rendering order after the bezier evaluation.
  
 image:examples/render-3.png
 
-Each interpolated point in four bezier curves, will be used for creating another curve. So in that way it will be possible shape a solid surface. A surface in this example has four curves and two properties, wide and fall. Wide is the one is longing, and fall is the curve that created by interpolated points.
+Each interpolated point in four bezier curves, will be used for creating another curve. So in that way it will be possible shape a solid surface. A surface in this example has four curves and two properties, wide and fall. Wide is the one is longing, and fall is a curve that created by interpolated points.
  
 - code -
 %(examples/render-4.py)s
@@ -83,8 +83,11 @@ image:examples/render-4-2.png
 When they are both higher, the surface will be visible.
  
 image:examples/render-4-3.png
+
+Keeping the wide and tall parameters less, drawing lines between sparse points with their segments calculated by their distance may give better results. I leave it as it looks like now.
  
-I keep the rendering part in Python. I edit the surfaces by an application that runs on a browser written with javascript when I am creating something. Here are some examples that I rendered in this way.
+
+The render part is written in Python language. I edit the surfaces by an application that runs on a browser written with javascript when I am creating something. Here are some examples that I rendered in this way.
 
 image:examples/pan-w-eggs-done.png
  
