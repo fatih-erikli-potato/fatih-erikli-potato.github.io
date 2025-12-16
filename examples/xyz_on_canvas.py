@@ -5,5 +5,5 @@ def xyz_on_canvas(x, y, z, unit_scale, w, h, rh, rv, include_z=False):
   x_on_canvas = w/2 + xn
   y_on_canvas = h/2 + (yn*-1)
   if include_z:
-    return (x_on_canvas, y_on_canvas, z)
+    return (x_on_canvas, y_on_canvas, zn)
   return (x_on_canvas, y_on_canvas)

@@ -9,7 +9,6 @@ def distance(a, b):
   dy = max(ay, by) - min(ay, by)
   dz = max(az, bz) - min(az, bz)
   # the longest distance of axises will be used for interpolating the line
-  # between a and b. no square root calculation needed here.
   return max(dx, dy, dz)
 
 cubes = []

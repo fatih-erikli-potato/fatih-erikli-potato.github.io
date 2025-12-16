@@ -48,8 +48,8 @@ def get_text_block(text, scale, dir_="glyph-resized"):
 
 def get_code_line_block(text, scale, tokens, line_starts_at):
   imgs = []
-  fish = {"elements": [], "w": 0}
-  fishes = [fish]
+  fish = None
+  fishes = []
   i = 0
   for w in text:
     if w == " ":
@@ -60,20 +60,30 @@ def get_code_line_block(text, scale, tokens, line_starts_at):
     pngf = Image.open(glyph_png_relative_path)
     wid = pngf.size[0]*scale
     token = seek_token_by_char_index(tokens, line_starts_at + i)
-    fish["w"] += int(wid)
     imgattrs = {
+      # "is-white-space": is_white_space,
       "class": ["masked"],
       "width": "{0}px".format(int(wid)),
       "height": "{0}px".format(int(pngf.size[1]*scale)),
       "alt": w,
       "src": glyph_png_relative_path}
-    if token:
-      imgattrs["class"].append(token["type"])
-    fish["elements"].append(img(imgattrs))
-    if w == " ":
-      fish = {"elements": [], "w": 0}
+    imgattrs["class"].append(token["type"])
+    if fish is None:
+      fish = {"elements": [], "w": 0, "is-whitespace": token["type"] == "whitespace"}
       fishes.append(fish)
+    else:
+      if token["type"] == "whitespace":
+        if not fish["is-whitespace"]:
+          fish = {"elements": [], "w": 0, "is-whitespace": True}
+          fishes.append(fish)
+      else:
+        if fish["is-whitespace"]:
+          fish = {"elements": [], "w": 0, "is-whitespace": False}
+          fishes.append(fish)
+    fish["w"] += int(wid)
+    fish["elements"].append(img(imgattrs))
     i += 1
+  
   fish_block = []
   for fish in fishes:
     fish_block.append(div({"style": {"width": "{0}px".format(int(fish["w"]))}}, *fish["elements"]))

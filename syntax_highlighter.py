@@ -9,8 +9,9 @@ reserved = [
 "raise",
 "class",
 ]
+spaceinstring = "space in string"
 breakline = "\n"
-space = " "
+whitespace = [" "]
 quotes = ["'", '"']
 nums = "0123456789"
 abc = "abcdefghijklmnoprstuvyzwxq"
@@ -50,7 +51,10 @@ def seek_new_token():
     tokenizer["tokens"].append({"type": named_tokens[tokenizer["char"]], "starts": i, "ends": i+1})
   elif tokenizer["char"] == "#":
     tokenizer["token"] = {"type": "comment", "starts": i, "ends": i+1}
-    tokenizer["tokens"].append(tokenizer["token"]);
+    tokenizer["tokens"].append(tokenizer["token"])
+  elif tokenizer["char"] in whitespace:
+    tokenizer["token"] = {"type": "whitespace", "starts": i, "ends": i+1}
+    tokenizer["tokens"].append(tokenizer["token"])
 
 tokenizer = {
   "i": 0,
@@ -107,6 +111,12 @@ def tokenize(text):
           tokenizer["token"] = None
         else:
           tokenizer["token"]["ends"] += 1
+      elif tokenizer["token"]["type"] == "whitespace":
+        if tokenizer["char"] in whitespace:
+          tokenizer["token"]["ends"] += 1
+        else:
+          tokenizer["token"] = None
+          seek_new_token()
     else:
       seek_new_token()
     tokenizer["i"] += 1
