@@ -10,8 +10,7 @@ reserved = [
 "class",
 ]
 spaceinstring = "space in string"
-breakline = "\n"
-whitespace = [" "]
+whitespace = [" ", "\n"]
 quotes = ["'", '"']
 nums = "0123456789"
 abc = "abcdefghijklmnoprstuvyzwxq"
@@ -27,7 +26,7 @@ named_tokens = {
   "{": "curly_begin",
   "}": "curly_end",
   ";": "semicolon",
-  ":": "colon"
+  ":": "colon",
 }
 quote_escape = chr(92)
 reserved_identifiers = ["None", "True", "False"]
@@ -109,6 +108,7 @@ def tokenize(text):
       elif tokenizer["token"]["type"] == "comment":
         if tokenizer["char"] == "\n":
           tokenizer["token"] = None
+          seek_new_token()
         else:
           tokenizer["token"]["ends"] += 1
       elif tokenizer["token"]["type"] == "whitespace":

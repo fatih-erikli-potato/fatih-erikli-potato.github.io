@@ -38,7 +38,7 @@ I am using Python's PIL library for drawing in two-d. The render will be looking
  
 The unit of width and height will be cubes.
 
-image:examples/render-1.png
+image:/examples/render-1.png
  
 Unit scale is too much for demonstration purpuse. It will be very less when using the cubes to create something that looks like not made of cubes. A bezier surface will be rendered with balls that mades of cubes.
  
@@ -54,7 +54,7 @@ It is easy to create a ball when we think a ball's radius is it's distance to th
  
 The result will be this.
  
-image:examples/render-2.png
+image:/examples/render-2.png
  
 A bezier surface is made of four bezier curves. Lets try to render a single bezier curve and complete the render process first.
  
@@ -64,7 +64,7 @@ A bezier surface is made of four bezier curves. Lets try to render a single bezi
  
 Cubes are sorted in their rendering order after the bezier interpolation.
  
-image:examples/render-3.png
+image:/examples/render-3.png
 
 Each interpolated point in four bezier curves, will be used for creating another curve. So in that way it will be possible shape a solid surface. A surface in this example has four curves and two properties, wide and fall. Wide is the one is longing, and fall is a curve that created by longing interpolated points.
  
@@ -74,15 +74,15 @@ Each interpolated point in four bezier curves, will be used for creating another
  
 The result is looking like this when the wide way more than fall.
  
-image:examples/render-4-1.png
+image:/examples/render-4-1.png
  
 Here is when the fall is higher than the wide.
  
-image:examples/render-4-2.png
+image:/examples/render-4-2.png
  
 When they are both higher, the surface will be visible.
  
-image:examples/render-4-3.png
+image:/examples/render-4-3.png
 
 Keeping the wide and tall parameters less, drawing lines between sparse points with their segments calculated by their distance may give better results. Lets try that.
  
@@ -92,11 +92,11 @@ Keeping the wide and tall parameters less, drawing lines between sparse points w
 
 In that way we will get rid of sparse dots when rendering something.
 
-image:examples/render-5.png
+image:/examples/render-5.png
 
-Next step, instead of showing the faces with balls made of cubes, finding the shading of a face by getting the average color of rendered cubes. I tried that it works well, however I like cube rendered faces more than this one. It may be possible to find shading of a face, without need to render them with cubes first, but I am afraid of doing that math. This is a painter's way to draw something on canvas, I prefer this way of rendering. Math stuff is not easy as it is written on black-white blackboard, and most likely the result is going to be disappointment.
+Next step, instead of showing the faces with balls made of cubes, finding the shading of a face by getting the average color of rendered cubes. It works well, plus it is possible to scale shaded faces without a need to calculate them again. It may be possible to find shading of a face, without need to render them with cubes first, but I am afraid of doing that math. This is a painter's way to draw something on canvas, I prefer this way of rendering. Math stuff is not easy as it is written on black-white blackboard, and most likely the result is going to be disappointment.
 
-image:examples/render-6.png
+image:/examples/render-6.png
  
 - code -
 %(examples/render-6.py)s
@@ -104,15 +104,15 @@ image:examples/render-6.png
  
 The render part is written in Python language. I edit the surfaces by an application that runs on a browser written with javascript when I am creating something. Here are some examples that I rendered in this way, with cubes.
  
-image:examples/balconykarmelicka.png
+image:/examples/balconykarmelicka.png
  
-image:examples/sink.png
+image:/examples/sink.png
 
-image:examples/pan-w-eggs-done.png
+image:/examples/pan-w-eggs-done.png
  
-image:examples/sandwich.png
+image:/examples/sandwich.png
  
-image:examples/sandwich1x.png
+image:/examples/sandwich1x.png
  
 Good luck playing with that.
 

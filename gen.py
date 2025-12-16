@@ -1,4 +1,4 @@
-from html import make_html_w_doctype, div, img, a, iframe
+from html import make_html_w_doctype, div, img, a
 from syntax_highlighter import tokenize
 from PIL import Image
 import os
