@@ -34,8 +34,8 @@ for curve in surface:
     p[1] *= scale_surface
     p[2] *= scale_surface
 
-wide = 4
-fall = 4
+wide = 10
+fall = 10
 ball_size = 2
 faces = []
 
@@ -103,7 +103,7 @@ for a, b, c, d, *rgb in faces:
   avg_b = sum_b / shade_len
   faces_rendered.append([a, b, c, d, [int(avg_r), int(avg_g), int(avg_b)]])
 
-name = "render-6"
+name = "render-6-1"
 width = WIDTH * UNIT_SCALE
 height = HEIGHT * UNIT_SCALE
 image = Image.new("RGB", (width, height), (255, 255, 255))

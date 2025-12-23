@@ -98,6 +98,8 @@ Next step, instead of showing the faces with balls made of cubes, finding the sh
 
 image:/examples/render-6.png
  
+image:/examples/render-6-1.png
+ 
 - code -
 %(examples/render-6.py)s
 - code -
@@ -113,6 +115,8 @@ image:/examples/pan-w-eggs-done.png
 image:/examples/sandwich.png
  
 image:/examples/sandwich1x.png
+ 
+image:/examples/coffeesandwich.png
  
 Good luck playing with that.
 
