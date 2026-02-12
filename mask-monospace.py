@@ -12,7 +12,7 @@ for filename in os.listdir(directory):
     for y in range(0, height):
       r, g, b, a = image.getpixel((x, y))
       if a == 0:
-        r, g, b, a = 255, 255, 255, 255
+        r, g, b, a = 240, 240, 240, 255
       else:
         r, g, b, a = 0, 0, 0, 0
       image.putpixel((x, y), (r, g, b, a))

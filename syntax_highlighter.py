@@ -9,7 +9,6 @@ reserved = [
 "raise",
 "class",
 ]
-spaceinstring = "space in string"
 whitespace = [" ", "\n"]
 quotes = ["'", '"']
 nums = "0123456789"

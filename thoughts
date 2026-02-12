@@ -83,23 +83,28 @@ Keeping the wide and tall parameters less, drawing lines between sparse points w
 - code -
 
 Next step, instead of showing the faces with balls made of cubes, finding the shaded color of a face by calculating the average of rendered cubes that stays in the area of it. It works well, plus it is possible to scale or see them in different angles without a need to build and render again. It may be possible to find shading of a face, without need to render them with cubes first, but I am afraid of doing that math. This is a painter's way to draw something on canvas, I prefer this way of rendering. Math stuff is not easy as it is written on black-white blackboard, and most likely the result is going to be disappointment.
-
+ 
 image:/examples/render-6.png
  
 image:/examples/render-6-1.png
- 
+
 - code -
 %(examples/render-6.py)s
 - code -
  
-The render part is written in Python language. I edit the surfaces by an application that runs on a browser written with javascript when I am creating something. Here are some examples that I rendered in this way, with cubes.
+The render part is written in Python language. I edit the surfaces by an application that runs on a browser written with javascript when I am creating something. Here are some examples that I rendered in this way.
+ 
+These are the examples with only cubes.
  
 image:/examples/balconykarmelicka.png
  
 image:/examples/sink.png
  
+This is rendered with faces that painted by cubes.
+ 
+image:/examples/potato.png
+ 
 Good luck playing with that.
-
 ----
 Syntax highlighting in Python
 syntax-highlighting-in-python
@@ -144,9 +149,7 @@ def lerp(t, a, b):
     "y": a["y"] + t * dy,
     "z": a["z"] + t * dz
   }
-}
  
-
 def bezier(t, p0, p1, p2, p3):
   a = lerp(t, p0, p1)
   b = lerp(t, p1, p2)
@@ -156,3 +159,5 @@ def bezier(t, p0, p1, p2, p3):
   f = lerp(t, d, e)
   return f
 - code -
+ 
+Good luck playing with this.

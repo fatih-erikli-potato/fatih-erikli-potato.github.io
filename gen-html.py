@@ -63,10 +63,12 @@ def get_posts():
 
 def write_html(filename, title, *content):
   html = make_html_w_doctype(
-    {"title": title, "favicon_url": "favicon.png",
+    {"title": title, "favicon_url": "/favicon.png",
     "styles": ["/style-plain.css"],
     "scripts": []},
-    div({"class": "container"}, *content),
+    div({"class": "container"}, *content,
+      div({"class": "footer"}, a({"href": "https://linkedin.com/in/fatih-erikli-2a8315337"}, "linkedin.com/in/fatih-erikli-2a8315337"))
+    ),
   )
   with open(filename, "w") as f:
     f.write(html)

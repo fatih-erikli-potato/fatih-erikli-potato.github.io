@@ -101,7 +101,7 @@ def get_code_block(text, scale):
   for line in text.split("\n"):
     ps.append(get_code_line_block(line, scale, tokens, line_starts_at))
     line_starts_at += len(line) + 1
-  return ps
+  return div({"class": "code"}, *ps)
 
 class keygetter(dict):
   def __getitem__(self, key):
@@ -127,7 +127,7 @@ def get_text_paragraphs(text, scale):
       })))
     elif paragraph == "- code -":
       if seek_code:
-        ps.extend(get_code_block(code, scale))
+        ps.append(get_code_block(code, scale))
         seek_code = False
         code = ""
       else:
@@ -159,7 +159,12 @@ def write_html(filename, title, *content):
     {"title": title, "favicon_url": "favicon.png",
     "styles": ["style.css"],
     "scripts": []},
-    div({"class": "container"}, *content),
+    div({"class": "container"}, *content,
+      div({"class": "footer text-block"},
+        a({"href": "https://linkedin.com/in/fatih-erikli-2a8315337"}, *get_text("linkedin", 0.05)),
+        *get_text(" ", 0.05),
+        a({"href": "https://www.instagram.com/fatiherikli9278/"}, *get_text("instagram", 0.05)),
+      )),
   )
   with open(filename, "w") as f:
     f.write(html)
