@@ -94,7 +94,7 @@ In that way we will get rid of sparse dots when rendering something.
 
 image:/examples/render-5.png
 
-Next step, instead of showing the faces with balls made of cubes, finding the shading of a face by getting the average color of rendered cubes. It works well, plus it is possible to scale shaded faces without a need to calculate them again. It may be possible to find shading of a face, without need to render them with cubes first, but I am afraid of doing that math. This is a painter's way to draw something on canvas, I prefer this way of rendering. Math stuff is not easy as it is written on black-white blackboard, and most likely the result is going to be disappointment.
+Next step, instead of showing the faces with balls made of cubes, finding the shaded color of a face by calculating the average of rendered cubes that stays in the area of it. It works well, plus it is possible to scale or see them in different angles without a need to build and render again. It may be possible to find shading of a face, without need to render them with cubes first, but I am afraid of doing that math. This is a painter's way to draw something on canvas, I prefer this way of rendering. Math stuff is not easy as it is written on black-white blackboard, and most likely the result is going to be disappointment.
 
 image:/examples/render-6.png
  
