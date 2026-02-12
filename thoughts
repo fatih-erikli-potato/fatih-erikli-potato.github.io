@@ -72,15 +72,7 @@ Each interpolated point in four bezier curves, will be used for creating another
 %(examples/render-4.py)s
 - code -
  
-The result is looking like this when the wide way more than fall.
- 
-image:/examples/render-4-1.png
- 
-Here is when the fall is higher than the wide.
- 
-image:/examples/render-4-2.png
- 
-When they are both higher, the surface will be visible.
+The result is looking like this.
  
 image:/examples/render-4-3.png
 
@@ -89,10 +81,6 @@ Keeping the wide and tall parameters less, drawing lines between sparse points w
 - code -
 %(examples/render-5.py)s
 - code -
-
-In that way we will get rid of sparse dots when rendering something.
-
-image:/examples/render-5.png
 
 Next step, instead of showing the faces with balls made of cubes, finding the shaded color of a face by calculating the average of rendered cubes that stays in the area of it. It works well, plus it is possible to scale or see them in different angles without a need to build and render again. It may be possible to find shading of a face, without need to render them with cubes first, but I am afraid of doing that math. This is a painter's way to draw something on canvas, I prefer this way of rendering. Math stuff is not easy as it is written on black-white blackboard, and most likely the result is going to be disappointment.
 

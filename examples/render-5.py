@@ -30,7 +30,7 @@ for curve in surface:
 
 wide = 4
 fall = 4
-ball_size = 2
+ball_size = 4
 
 for w in range(0, wide):
   wa = bezier(w/wide, surface[0][0], surface[0][1], surface[0][2], surface[0][3])
@@ -71,7 +71,7 @@ render(
   cubes,
   1024,
   1024,
-  2,
+  4,
   40,
   20,
 )

@@ -19,9 +19,9 @@ for curve in surface:
     p[1] *= scale_surface
     p[2] *= scale_surface
 
-wide = 200
-fall = 200
-ball_size = 2
+wide = 40
+fall = 40
+ball_size = 4
 
 for w in range(0, wide):
   wa = bezier(w/wide, surface[0][0], surface[0][1], surface[0][2], surface[0][3])
@@ -44,7 +44,7 @@ render(
   cubes,
   1024,
   1024,
-  2,
+  4,
   40,
   20,
 )
