@@ -178,7 +178,7 @@ for post in posts:
       a({"href": "{0}.html".format(post["slug"])}, *get_text(post["title"], 0.05))
     )
   )
-write_html("index.html", "THINKING OUT LOUD", div(
+write_html("custom-font.html", "THINKING OUT LOUD", div(
   div({"class": "header"}, *get_text("HI, I AM FATIH ERIKLI", 0.1)),
   div({"class": "text-block"}, *get_text("I am a software developer.", 0.05)),
   div({"class": "header"}, *get_text("THINKING OUT LOUD", 0.1)),

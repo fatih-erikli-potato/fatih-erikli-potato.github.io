@@ -67,7 +67,10 @@ def write_html(filename, title, *content):
     "styles": ["/style-plain.css"],
     "scripts": []},
     div({"class": "container"}, *content,
-      div({"class": "footer"}, a({"href": "https://linkedin.com/in/fatih-erikli-2a8315337"}, "linkedin.com/in/fatih-erikli-2a8315337"))
+      div({"class": "footer"},
+        a({"href": "https://instagram.com/fatiherikli9278"}, "instagram"), " ",
+        a({"href": "https://linkedin.com/in/fatih-erikli-2a8315337"}, "linkedin")
+      )
     ),
   )
   with open(filename, "w") as f:
@@ -82,7 +85,7 @@ for post in posts:
       a({"href": "blog/{0}.html".format(post["slug"])}, post["title"])
     )
   )
-write_html("default.html", "THINKING OUT LOUD", div(
+write_html("index.html", "THINKING OUT LOUD", div(
   div({"class": "header"}, "HI, I AM FATIH ERIKLI"),
   div({"class": "text-block"}, "I am a software developer"),
   div({"class": "header"}, "THINKING OUT LOUD"),
@@ -90,7 +93,7 @@ write_html("default.html", "THINKING OUT LOUD", div(
 ))
 for post in posts:
   write_html("blog/{0}.html".format(post["slug"]), post["title"],
-    div({"class": "text-block"}, a({"href": "/default.html"}, "home")),
+    div({"class": "text-block"}, a({"href": "/"}, "home")),
     div({"class": "header"}, post["title"]),
     *get_text_paragraphs(post["content"], 0.05)
   )

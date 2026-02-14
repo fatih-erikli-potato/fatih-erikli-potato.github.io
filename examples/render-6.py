@@ -1,7 +1,6 @@
 from render import render
 from ball import create_ball
 from bezier import bezier, lerp
-from xyz_on_canvas import xyz_on_canvas
 
 from PIL import Image, ImageDraw
 
@@ -113,7 +112,8 @@ faces_on_canvas = []
 for a, b, c, d, rgb in faces_rendered:
   points = []
   for x, y, z in [a, b, c, d]:
-    points.append(xyz_on_canvas(x, y, z, UNIT_SCALE, width, height, ROTATE_H, ROTATE_V, True))
+    xn, yn, zn = rotate_xyz(x * unit_scale, y * unit_scale, z * unit_scale, rh, rv)
+    points.append((xn, yn, zn))
   faces_on_canvas.append([points, rgb])
 
 def centerz_sort(face):
@@ -127,7 +127,7 @@ for face in faces_on_canvas:
   points, rgb = face
   points_wo_z = []
   for x, y, z in points:
-    points_wo_z.append((x, y))
+    points_wo_z.append(( width/2 + x, height/2 + y*-1))
   draw.polygon(points_wo_z, tuple(rgb))
 
 image.save(open("{}.png".format(name), "wb"), "PNG")

@@ -1,5 +1,4 @@
 from create_cube import create_cube
-from xyz_on_canvas import xyz_on_canvas
 from darken import darken
  
 from PIL import Image, ImageDraw
@@ -14,7 +13,9 @@ def render(name, cubes, width, height, unit_scale, rotate_horizontal, rotate_ver
     for darken_percent, *diamond in cube:
       points = []
       for xx, yy, zz in diamond:
-        x, y = xyz_on_canvas(xx, yy, zz, unit_scale, width, height, rotate_horizontal, rotate_vertical)
+        xn, yn, zn = rotate_xyz(xn * unit_scale, yn * unit_scale, zn * unit_scale, rotate_horizontal, rotate_vertical)
+        x = w/2 + xn
+        y = h/2 + (yn * -1)
         points.append((x, y))
       draw.polygon(points, darken(r, g, b, darken_percent))
   if save:

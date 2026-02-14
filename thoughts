@@ -12,12 +12,6 @@ The function returns diamond shapes. Set of diamond shapes, ordered in correct w
 %(examples/rotate.py)s
 - code -
  
-A rotate function that rotates x-z horizontally, then y-z in vertical axis will be needed.
- 
-- code -
-%(examples/xyz_on_canvas.py)s
-- code -
- 
 A point in three-d should be rotated first. The values x-y will be the position on canvas. On canvas, the when the y is getting higher, it means it is being drawn to the end of canvas in vertical. So the height should be inreversed. I also scale them with a multipier in order to see the cube's borders. At the end, the scale may be minimized as less as possible. So the cubes won't be visible in result.
  
 - code -
