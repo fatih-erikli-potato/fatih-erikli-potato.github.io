@@ -62,6 +62,7 @@ while (sliceCurrent) {
   obj["wide"] *= t;
   sliceCurrentWide -= 1;
 }
+obj["wide"] = int(obj["wide"])
 - code -
 
 This slices the surface horizontally that it's segments set by "wide" parameter. The "fall" is for the vertical. Same method must be applied the surface if it needs to be sliced horizontally.
