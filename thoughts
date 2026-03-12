@@ -31,6 +31,10 @@ const obj = {
 }
 while (sliceCurrent > 1) {
   const t = (obj["wide"] / sliceCurrent) * (sliceCurrent - 1) / obj["wide"];
+  const [halfa, enda] = splitBezier(t, obj.points[0], obj.points[1], obj.points[2], obj.points[3]);
+  const [halfb, endb] = splitBezier(t, obj.points[4], obj.points[5], obj.points[6], obj.points[7]);
+  const [halfc, endc] = splitBezier(t, obj.points[8], obj.points[9], obj.points[10], obj.points[11]);
+  const [halfd, endd] = splitBezier(t, obj.points[12], obj.points[13], obj.points[14], obj.points[15]);
   obj.points[0] = halfa[0];
   obj.points[1] = halfa[1];
   obj.points[2] = halfa[2];
