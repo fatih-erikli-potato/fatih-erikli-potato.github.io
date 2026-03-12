@@ -29,7 +29,7 @@ const obj = {
   "fall": 4,
   "points": [] // I leave it empty
 }
-while (sliceCurrent) {
+while (sliceCurrent > 1) {
   const t = (obj["wide"] / sliceCurrent) * (sliceCurrent - 1) / obj["wide"];
   obj.points[0] = halfa[0];
   obj.points[1] = halfa[1];
