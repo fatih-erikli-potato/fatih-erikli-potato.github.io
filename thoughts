@@ -59,6 +59,7 @@ while (sliceCurrent > 1) {
       endd[0], endd[1], endd[2], endd[3]
     ],
   };
+  draft.push(objNew);
   obj["wide"] *= t;
   sliceCurrentWide -= 1;
 }
