@@ -27,7 +27,7 @@ let sliceCurrent = 4;
 const obj = {
   "wide": 10,
   "fall": 4,
-  "points": [] # I leave it empty
+  "points": [] // I leave it empty
 }
 while (sliceCurrent) {
   const t = (obj["wide"] / sliceCurrent) * (sliceCurrent - 1) / obj["wide"];

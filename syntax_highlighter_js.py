@@ -22,28 +22,29 @@ named_tokens = {
 quote_escape = chr(92)
 reserved_identifiers = ["None", "True", "False"]
 
-def seek_new_token():
+def seek_new_token(invalidated_token=None):
   i = tokenizer["i"]
-  if tokenizer["char"] in quotes:
+  if invalidated_token == "//":
+    tokenizer["tokens"].pop()
+    tokenizer["token"] = {"type": "comment", "starts": i-1, "ends": i+1}
+    tokenizer["tokens"].append(tokenizer["token"])
+  elif tokenizer["char"] in quotes:
     tokenizer["current_quote"] = tokenizer["char"]
-    tokenizer["token"] = {"type": "string", "starts": i, "ends": i+1}
+    tokenizer["token"] = {"type": "string", "starts": i, "ends": i + 1}
     tokenizer["tokens"].append(tokenizer["token"])
   elif tokenizer["char"] in operators:
-    tokenizer["token"] = {"type": "operator", "starts": i, "ends": i+1}
+    tokenizer["token"] = {"type": "operator", "starts": i, "ends": i + 1}
     tokenizer["tokens"].append(tokenizer["token"])
   elif tokenizer["char"] in nums:
-    tokenizer["token"] = {"type": "number", "starts": i, "ends": i+1}
+    tokenizer["token"] = {"type": "number", "starts": i, "ends": i + 1}
     tokenizer["tokens"].append(tokenizer["token"])
   elif tokenizer["char"] in abc:
-    tokenizer["token"] = {"type": "identifier", "starts": i, "ends": i+1}
+    tokenizer["token"] = {"type": "identifier", "starts": i, "ends": i + 1}
     tokenizer["tokens"].append(tokenizer["token"])
   elif tokenizer["char"] in named_tokens:
-    tokenizer["tokens"].append({"type": named_tokens[tokenizer["char"]], "starts": i, "ends": i+1})
-  elif tokenizer["char"] == "#":
-    tokenizer["token"] = {"type": "comment", "starts": i, "ends": i+1}
-    tokenizer["tokens"].append(tokenizer["token"])
+    tokenizer["tokens"].append({"type": named_tokens[tokenizer["char"]], "starts": i, "ends": i + 1})
   elif tokenizer["char"] in whitespace:
-    tokenizer["token"] = {"type": "whitespace", "starts": i, "ends": i+1}
+    tokenizer["token"] = {"type": "whitespace", "starts": i, "ends": i + 1}
     tokenizer["tokens"].append(tokenizer["token"])
 
 tokenizer = {
@@ -77,7 +78,7 @@ def tokenize(text):
           tokenizer["token"]["ends"] += 1
         else:
           tokenizer["token"] = None
-          seek_new_token()
+          seek_new_token(token_next)
       elif tokenizer["token"]["type"] == "number":
         if tokenizer["char"] in nums:
           tokenizer["token"]["ends"] += 1
