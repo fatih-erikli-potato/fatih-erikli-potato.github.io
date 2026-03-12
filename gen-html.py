@@ -31,9 +31,12 @@ def get_text_paragraphs(text, scale):
     if paragraph.startswith("image:"):
       path = paragraph[len("image:"):]
       if ":" in path:
-        path, width, height = path.split(":")
+        path, width = path.split(":")
         width = int(width)
-        height = int(height)
+        pngf = Image.open(os.path.join(os.path.dirname(__file__), path.lstrip("/")))
+        pngwidth, pngheight = pngf.size
+        rat = width / pngwidth
+        height = int(pngheight * rat)
       else:
         width = 512
         height = 512
