@@ -1,12 +1,5 @@
 reserved = [
-"if", "elif", "else",
-"while", "for",
-"def", "return", "global",
-"import", "from",
-"continue", "break",
-"del",
-"in", "not", "or", "and", "is",
-"raise"
+"const", "let", "function", "return", "break", "continue", "for", "while", "if"
 ]
 whitespace = [" ", "\n"]
 quotes = ["'", '"']

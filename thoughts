@@ -1,32 +1,104 @@
+Slicing bezier surfaces
+slicing-bezier-surfaces
+It is possible to split a bezier surface into two pieces. It helps us to slice a surface into several pieces without losing the original shape. In that way we are able to delete one piece of several slices of a whole surface.
+
+- code:js -
+function splitBezier(t, p0, p1, p2, p3) {
+  const p4 = lerp(t, p0, p1);
+  const p5 = lerp(t, p1, p2);
+  const p6 = lerp(t, p2, p3);
+  const p7 = lerp(t, p4, p5);
+  const p8 = lerp(t, p5, p6);
+  const p9 = lerp(t, p7, p8);
+  return [
+    [{...p0}, p4, p7, p9],
+    [{...p9}, p8, p6, {...p3}]
+  ];
+}
+- code -
+
+This is a javascript code. I create the surface editing software in javascript. The function lerp is identical to Python one that I mentioned my blog post before. It takes the t value between 0 and 1, and returns two bezier curves, one is the half that splitted at t, the other one is other half. Two of them shapes the given bezier curve.
+
+This slices a curve into two pieces. So I slice the main piece until it is one piece of slices I want while I create another surface with the each other half.
+
+
+- code:js -
+let sliceCurrent = 4;
+const obj = {
+  "wide": 10,
+  "fall": 4,
+  "points": [] # I leave it empty
+}
+while (sliceCurrent) {
+  const t = (obj["wide"] / sliceCurrent) * (sliceCurrent - 1) / obj["wide"];
+  obj.points[0] = halfa[0];
+  obj.points[1] = halfa[1];
+  obj.points[2] = halfa[2];
+  obj.points[3] = halfa[3];
+  obj.points[4] = halfb[0];
+  obj.points[5] = halfb[1];
+  obj.points[6] = halfb[2];
+  obj.points[7] = halfb[3];
+  obj.points[8] = halfc[0];
+  obj.points[9] = halfc[1];
+  obj.points[10] = halfc[2];
+  obj.points[11] = halfc[3];
+  obj.points[12] = halfd[0];
+  obj.points[13] = halfd[1];
+  obj.points[14] = halfd[2];
+  obj.points[15] = halfd[3];
+  const objNew = {
+    "id": getNewId(),
+    "wide": parseInt((1 - t) * obj["wide"]),
+    "fall": obj["fall"],
+    "type": "plane",
+    "points": [
+      enda[0], enda[1], enda[2], enda[3],
+      endb[0], endb[1], endb[2], endb[3],
+      endc[0], endc[1], endc[2], endc[3],
+      endd[0], endd[1], endd[2], endd[3]
+    ],
+  };
+  obj["wide"] *= t;
+  sliceCurrentWide -= 1;
+}
+- code -
+
+This slices the surface horizontally that it's segments set by "wide" parameter. The "fall" is for the vertical. Same method must be applied the surface if it needs to be sliced horizontally.
+
+image:/screenshots/split.png:650:650
+
+Good luck playing with that.
+----
 Rendering a bezier surface
 rendering-a-bezier-surface
 Previously I wrote a blog post about how to interpolate a bezier curve. A bezier curve helps us to create smooth lines, surfaces, type faces. A bezier surface is set of bezier curves that is used for imaging a part of something. Before rendering a bezier surface, I will mention about how to render something with Python programming language. I will demonstrate it by rendering a set of cubes, then I will create marbles that made of cubes. A marble will stay at position of an interpolated point of a bezier curve. I will create an optimized cube for making the drawing process easier.
  
-- code -
+- code:python -
 %(examples/create_cube.py)s
 - code -
  
 The function returns diamond shapes. Set of diamond shapes, ordered in correct way, will be painted to an image file in Python or to a canvas on a browser. Vertically minus degrees are facing upwards. The visible faces must be set in correct order. It is possible to do that by ordering faces by their average z-index, but I prefer not to complicate that process further. Z-sort will be used for sorting the cubes.
  
-- code -
+- code:python -
 %(examples/rotate.py)s
 - code -
  
 A point in three-d should be rotated first. The values x-y will be the position on canvas. On canvas, the when the y is getting higher, it means it is being drawn to the end of canvas in vertical. So the height should be inreversed. I also scale them with a multipier in order to see the cube's borders. At the end, the scale may be minimized as less as possible. So the cubes won't be visible in result.
  
-- code -
+- code:python -
 %(examples/darken.py)s
 - code -
  
 A darken function like above will be needed in order to make a cube's faces visually differentiable.
  
-- code -
+- code:python -
 %(examples/render-1.py)s
 - code -
  
 I am using Python's PIL library for drawing in two-d. The render will be looking like below when we run it.
  
-- code -
+- code:python -
 %(examples/render.py)s
 - code -
  
@@ -36,13 +108,13 @@ image:/examples/render-1.png
  
 Unit scale is too much for demonstration purpuse. It will be very less when using the cubes to create something that looks like not made of cubes. A bezier surface will be rendered with balls that mades of cubes.
  
-- code -
+- code:python -
 %(examples/ball.py)s
 - code -
  
 It is easy to create a ball when we think a ball's radius is it's distance to the origin in a three-d space. The ball will be created in that way, starting at 0, 0, 0 origin.
  
-- code -
+- code:python -
 %(examples/render-2.py)s
 - code -
  
@@ -52,7 +124,7 @@ image:/examples/render-2.png
  
 A bezier surface is made of four bezier curves. Lets try to render a single bezier curve and complete the render process first.
  
-- code -
+- code:python -
 %(examples/render-3.py)s
 - code -
  
@@ -62,7 +134,7 @@ image:/examples/render-3.png
 
 Each interpolated point in four bezier curves, will be used for creating another curve. So in that way it will be possible shape a solid surface. A surface in this example has four curves and two properties, wide and fall. Wide is the one is longing, and fall is a curve that created by longing interpolated points.
  
-- code -
+- code:python -
 %(examples/render-4.py)s
 - code -
  
@@ -72,7 +144,7 @@ image:/examples/render-4-3.png
 
 Keeping the wide and tall parameters less, drawing lines between sparse points with their segments calculated by their distance may give better results. Lets try that.
  
-- code -
+- code:python -
 %(examples/render-5.py)s
 - code -
  
@@ -82,7 +154,7 @@ image:/examples/render-6.png
  
 image:/examples/render-6-1.png
 
-- code -
+- code:python -
 %(examples/render-6.py)s
 - code -
  
@@ -104,14 +176,14 @@ Syntax highlighting in Python
 syntax-highlighting-in-python
 I created a syntax highlighter to make my codes looking colorful in my blog. It is written in Python, so it does not require a Javascript code when the page is loaded. It is useful when you create html pages for documentation or a blog. Instead of making it packaged, I share the code piece, so it will be easer to modify when you find something missing.
  
-- code -
+- code:python -
 %(syntax_highlighter.py)s
 - code -
  
 
 By seeking all the characters with index, for an index of an iterated character, the function like below will be helpful to understand how the current character is categorized.
  
-- code -
+- code:python -
 def seek_token_by_char_index(tokens, char_index):
   for token in tokens:
     if char_index >= token["starts"] and char_index < token["ends"]:
@@ -133,7 +205,7 @@ interpolating-a-bezier-curve
 It is difficult to implement an interpolation of a bezier curve without seeing how it actually works. It requires too much attention to understand what is really happenning there. It is also difficult to find a clean implementation if you google that. You will most likely find an obfuscated version of a written clean code. So I am sharing a whole food with you.
  
 
-- code -
+- code:python -
 def lerp(t, a, b):
   dx = b["x"] - a["x"]
   dy = b["y"] - a["y"]

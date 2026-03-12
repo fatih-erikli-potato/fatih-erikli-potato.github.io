@@ -1,7 +1,10 @@
 from html import make_html_w_doctype, div, img, a, pre, span, p
 from syntax_highlighter import tokenize
+from syntax_highlighter_js import tokenize as tokenize_js
 from PIL import Image
 import os
+
+tokenize_f = {"python": tokenize, "js": tokenize_js}
 
 class keygetter(dict):
   def __getitem__(self, key):
@@ -9,8 +12,8 @@ class keygetter(dict):
     filepath = os.path.join(dirname, key)
     return open(filepath, "r").read()
 
-def get_code_block(text, scale):
-  tokens = tokenize(text)
+def get_code_block(lang, text, scale):
+  tokens = tokenize_f[lang](text)
   html_output = []
   for token in tokens:
     html_output.append(span({"class": token["type"]}, text[token["starts"]: token["ends"]]))
@@ -23,18 +26,28 @@ def get_text_paragraphs(text, scale):
   seek_code = False
 
   code = ""
+  lang = ""
   for paragraph in paragraphs:
     if paragraph.startswith("image:"):
       path = paragraph[len("image:"):]
+      if ":" in path:
+        path, width, height = path.split(":")
+        width = int(width)
+        height = int(height)
+      else:
+        width = 512
+        height = 512
       ps.append(div({"class": "image-block"}, img({
-        "width": 512,
-        "height": 512,
+        "width": width,
+        "height": height,
         "alt": path,
         "src": path
       })))
-    elif paragraph == "- code -":
+    elif paragraph.startswith("- code"):
+      if ":" in paragraph:
+        lang = paragraph[paragraph.index(':')+1:paragraph.index(' -')]
       if seek_code:
-        ps.append(get_code_block(code, scale))
+        ps.append(get_code_block(lang, code, scale))
         seek_code = False
         code = ""
       else:
