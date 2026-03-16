@@ -1,6 +1,6 @@
 Slicing bezier surfaces
 slicing-bezier-surfaces
-It is possible to split a bezier surface into two pieces. It helps us to slice a surface into several pieces without losing the original shape. In that way we are able to delete one piece of several slices of a whole surface.
+It is possible to split a bezier surface into two pieces. It helps to slice a surface into several pieces by keeping the whole shape in its original form. In that way we are able to shape one piece of several slices of a whole surface.
 
 - code:js -
 function splitBezier(t, p0, p1, p2, p3) {
@@ -17,10 +17,9 @@ function splitBezier(t, p0, p1, p2, p3) {
 }
 - code -
 
-This is a javascript code. I create the surface editing software in javascript. The function lerp is identical to Python one that I mentioned my blog post before. It takes the t value between 0 and 1, and returns two bezier curves, one is the half that splitted at t, the other one is other half. Two of them shapes the given bezier curve.
+This is a javascript code. I create the surface editing software in javascript. The function lerp is identical to Python one that I mentioned in my blog post before. It takes the t value between 0 and 1, and returns two bezier curves, one is the half that splitted at t, the other one is other half. Two of them when combined shapes the given bezier curve.
 
 This slices a curve into two pieces. So I slice the main piece until it is one piece of slices I want while I create another surface with the each other half.
-
 
 - code:js -
 let sliceCurrent = 4;
@@ -112,7 +111,7 @@ The unit of width and height will be cubes.
 
 image:/examples/render-1.png
  
-Unit scale is too much for demonstration purpuse. It will be very less when using the cubes to create something that looks like not made of cubes. A bezier surface will be rendered with balls that mades of cubes.
+Unit scale is too much for demonstration purpose. It will be very less when using the cubes to create something that looks like not made of cubes. A bezier surface will be rendered with balls that mades of cubes.
  
 - code:python -
 %(examples/ball.py)s
@@ -147,6 +146,8 @@ Each interpolated point in four bezier curves, will be used for creating another
 The result is looking like this.
  
 image:/examples/render-4-3.png
+ 
+I show the marble-drawn result for demonstration purpose. It is being used only for painting the faces. I think it explains how the painting works very well.
 
 Keeping the wide and tall parameters less, drawing lines between sparse points with their segments calculated by their distance may give better results. Lets try that.
  
@@ -154,26 +155,28 @@ Keeping the wide and tall parameters less, drawing lines between sparse points w
 %(examples/render-5.py)s
 - code -
  
-Next step, instead of showing the faces with balls made of cubes, finding the shaded color of a face by calculating the average of rendered cubes that stays in the area of it. It works well, plus it is possible to scale or see them in different angles without a need to build and render again. It may be possible to find shading of a face, without need to render them with cubes first, but I am afraid of doing that math. This is a painter's way to draw something on canvas, I prefer this way of rendering. Math stuff is not easy as it is written on black-white blackboard, and most likely the result is going to be disappointment.
+Next step, instead of showing the faces with balls made of cubes, finding the shaded color of a face by calculating the average of rendered cubes that stays in the area of it. It works well, plus it is possible to scale or see them in different angles without a need to build and render again.
+ 
+Each face, should be drawn to an empty canvas as black, and to another one with rendered cubes. The average rgb color stays in the area of face that painted as black on the canvas will be the rendered color.
+ 
+- code:python -
+%(examples/carboncopy.py)s
+- code -
  
 image:/examples/render-6.png
- 
-image:/examples/render-6-1.png
 
 - code:python -
 %(examples/render-6.py)s
 - code -
+
+It is possible to see in different angle without a need to re-render them.
+ 
+image:/examples/render-6-1.png
+
+image:/examples/render-6-2.png
  
 The render part is written in Python language. I edit the surfaces by an application that runs on a browser written with javascript when I am creating something. Here are some examples that I rendered in this way.
  
-These are the examples with only cubes.
- 
-image:/examples/balconykarmelicka.png
- 
-image:/examples/sink.png
- 
-These iare rendered with faces that painted by cubes.
-
 image:/examples/potato.png
  
 image:/examples/coffee.png
@@ -201,10 +204,6 @@ def seek_token_by_char_index(tokens, char_index):
 - code -
  
 Good luck playing with that.
-----
-SVG even odd rule
-svg-even-odd-rule
-Path on another path being subtracted sounds weird to me. I think they are constructed part by part. Deleting a part of a rendered thing, or rendering a path with excluding some parts of it by looking at another path needs twice more rendering time than doing it part by part. Boolean operations on such things are difficult things and I think it is not a solved thing in computer science. I think it is not science at all, it is some sort of pen and paper trick. Computer guys claim that it is possible than they compute it then delete one by one.
 ----
 Comma separated values
 comma-separated-values

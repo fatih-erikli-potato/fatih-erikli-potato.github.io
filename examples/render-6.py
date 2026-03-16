@@ -1,6 +1,8 @@
 from render import render
+from carboncopy import carboncopy
 from ball import create_ball
 from bezier import bezier, lerp
+from rotate import rotate_xyz
 
 from PIL import Image, ImageDraw
 
@@ -35,7 +37,7 @@ for curve in surface:
 
 wide = 10
 fall = 10
-ball_size = 2
+ball_size = 4
 faces = []
 
 for w in range(0, wide):
@@ -57,6 +59,27 @@ for w in range(0, wide):
 def zsort(cube):
   x, y, z, r, g, b = cube
   return (y, z, x)
+
+def avg_rgb(carbon_copy, img):
+  widthimg, heightimg = img.size
+  pixels = img.load()
+  shade_len = 0
+  sum_r = 0
+  sum_g = 0
+  sum_b = 0
+  for x in range(widthimg):
+    for y in range(heightimg):
+      rgb = pixels[x, y]
+      ccrgb = carbon_copy.getpixel((x, y))
+      if ccrgb[0] == 0 and ccrgb[1] == 0 and ccrgb[2] == 0:
+        sum_r += rgb[0]
+        sum_g += rgb[1]
+        sum_b += rgb[2]
+        shade_len += 1
+  avg_r = int(sum_r / shade_len)
+  avg_g = int(sum_g / shade_len)
+  avg_b = int(sum_b / shade_len)
+  return (avg_r, avg_g, avg_b)
 
 faces_rendered = []
 
@@ -82,52 +105,44 @@ for a, b, c, d, *rgb in faces:
     ROTATE_V,
     False
   )
-  widthimg, heightimg = img.size
-  pixels = img.load()
-  shade_len = 0
-  sum_r = 0
-  sum_g = 0
-  sum_b = 0
-  for x in range(widthimg):
-    for y in range(heightimg):
-      rgb = pixels[x, y]
-      if not (rgb[0] == 255 and rgb[1] == 255 and rgb[2] == 255):
-        # white is the background color
-        sum_r += rgb[0]
-        sum_g += rgb[1]
-        sum_b += rgb[2]
-        shade_len += 1
-  avg_r = sum_r / shade_len
-  avg_g = sum_g / shade_len
-  avg_b = sum_b / shade_len
-  faces_rendered.append([a, b, c, d, [int(avg_r), int(avg_g), int(avg_b)]])
+  carbon_copy = carboncopy([a, b, c, d], WIDTH, HEIGHT, UNIT_SCALE, ROTATE_H, ROTATE_V)
+  # img.save(open("render-6-face.png", "wb"), "PNG")
+  # carbon_copy.save(open("render-6-carbon-copy.png", "wb"), "PNG")
+  # break
+  rr, gg, bb = avg_rgb(carbon_copy, img)
+  faces_rendered.append([a, b, c, d, rr, gg, bb])
 
-name = "render-6-1"
-width = WIDTH * UNIT_SCALE
-height = HEIGHT * UNIT_SCALE
-image = Image.new("RGB", (width, height), (255, 255, 255))
-draw = ImageDraw.Draw(image)
-faces_on_canvas = []
+def draw_rendered_faces(name, faces_rendered, rh, rv):
+  width = WIDTH * UNIT_SCALE
+  height = HEIGHT * UNIT_SCALE
+  image = Image.new("RGB", (width, height), (255, 255, 255))
+  draw = ImageDraw.Draw(image)
+  faces_on_canvas = []
 
-for a, b, c, d, rgb in faces_rendered:
-  points = []
-  for x, y, z in [a, b, c, d]:
-    xn, yn, zn = rotate_xyz(x * unit_scale, y * unit_scale, z * unit_scale, rh, rv)
-    points.append((xn, yn, zn))
-  faces_on_canvas.append([points, rgb])
+  for a, b, c, d, *rgb in faces_rendered:
+    points = []
+    for x, y, z in [a, b, c, d]:
+      # it is possible to see the render in different angles than painting
+      xn, yn, zn = rotate_xyz(x * UNIT_SCALE, y * UNIT_SCALE, z * UNIT_SCALE, rh, rv)
+      points.append((xn, yn, zn))
+    faces_on_canvas.append([points, rgb])
 
-def centerz_sort(face):
-  points, rgb = face
-  sumz = 0
-  for x, y, z in points:
-    z += sumz
-  return sumz / len(points)
-faces_on_canvas.sort(key=centerz_sort)
-for face in faces_on_canvas:
-  points, rgb = face
-  points_wo_z = []
-  for x, y, z in points:
-    points_wo_z.append(( width/2 + x, height/2 + y*-1))
-  draw.polygon(points_wo_z, tuple(rgb))
+  def centerz_sort(face):
+    points, rgb = face
+    sumz = 0
+    for x, y, z in points:
+      z += sumz
+    return sumz / len(points)
+  faces_on_canvas.sort(key=centerz_sort)
 
-image.save(open("{}.png".format(name), "wb"), "PNG")
+  for face in faces_on_canvas:
+    points, rgb = face
+    points_wo_z = []
+    for x, y, z in points:
+      points_wo_z.append(( width/2 + x, height/2 + y*-1))
+    draw.polygon(points_wo_z, tuple(rgb))
+
+  image.save(open("{}.png".format(name), "wb"), "PNG")
+
+draw_rendered_faces("render-6-1", faces_rendered, ROTATE_H, ROTATE_V)
+draw_rendered_faces("render-6-2", faces_rendered, ROTATE_H + 10, ROTATE_V)
