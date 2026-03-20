@@ -85,7 +85,8 @@ def write_html(filename, title, *content):
     div({"class": "container"}, *content,
       div({"class": "footer"},
         a({"href": "https://instagram.com/fatiherikli9278"}, "instagram"), " ",
-        a({"href": "https://linkedin.com/in/fatih-erikli-2a8315337"}, "linkedin")
+        a({"href": "https://linkedin.com/in/fatih-erikli-2a8315337"}, "linkedin"), " ",
+        a({"href": "https://github.com/fatih-erikli-potato"}, "github")
       )
     ),
   )
@@ -103,7 +104,7 @@ for post in posts:
   )
 write_html("index.html", "THINKING OUT LOUD", div(
   div({"class": "header"}, "HI, I AM FATIH ERIKLI"),
-  div({"class": "text-block"}, "I am a software developer"),
+  div({"class": "text-block"}, "I am a software developer."),
   div({"class": "header"}, "THINKING OUT LOUD"),
   *posts_tags
 ))

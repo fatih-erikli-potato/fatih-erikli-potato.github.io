@@ -14,7 +14,13 @@ def render(name, cubes, width, height, unit_scale, rotate_horizontal, rotate_ver
     for darken_percent, *diamond in cube:
       points = []
       for xx, yy, zz in diamond:
-        xn, yn, zn = rotate_xyz(xx * unit_scale, yy * unit_scale, zz * unit_scale, rotate_horizontal, rotate_vertical)
+        xn, yn, zn = rotate_xyz(
+          xx * unit_scale,
+          yy * unit_scale,
+          zz * unit_scale,
+          rotate_horizontal,
+          rotate_vertical
+        )
         x = width/2 + xn
         y = height/2 + (yn * -1)
         points.append((x, y))
