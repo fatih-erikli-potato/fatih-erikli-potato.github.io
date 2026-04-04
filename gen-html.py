@@ -71,7 +71,7 @@ def write_html(filename, title, *content):
     div({"class": "container"}, *content,
       div({"class": "footer"},
         a({"href": "https://instagram.com/fatiherikli9278"}, "instagram"), " ",
-        a({"href": "https://linkedin.com/in/fatih-erikli-2a8315337"}, "linkedin"),
+        a({"href": "https://linkedin.com/in/fatih-erikli-2a8315337"}, "linkedin"), " ",
         a({"href": "https://github.com/fatih-erikli-potato"}, "github")
       )
     ),
