@@ -1,6 +1,7 @@
 from html import make_html_w_doctype, div, img, a, pre, span, p
 from syntax_highlighter import tokenize
 from syntax_highlighter_js import tokenize as tokenize_js
+from get_posts import get_posts
 from PIL import Image
 import os
 
@@ -62,21 +63,6 @@ def get_text_paragraphs(text, scale):
         ps.append(p(paragraph))
   return ps
 
-def get_posts():
-  f = open("thoughts", "r")
-  posts_d = f.read()
-  f.close()
-  posts = []
-  posts_d_split = posts_d.split("\n----\n")
-  for post_raw in posts_d_split:
-    first_breakline = post_raw.index("\n")
-    second_breakline = post_raw.index("\n", first_breakline+1)
-    title = post_raw[:first_breakline]
-    slug = post_raw[first_breakline+1:second_breakline]
-    content = post_raw[second_breakline+1:]
-    posts.append({"title": title, "slug": slug, "content": content})
-  return posts
-
 def write_html(filename, title, *content):
   html = make_html_w_doctype(
     {"title": title, "favicon_url": "/favicon.png",
@@ -85,7 +71,7 @@ def write_html(filename, title, *content):
     div({"class": "container"}, *content,
       div({"class": "footer"},
         a({"href": "https://instagram.com/fatiherikli9278"}, "instagram"), " ",
-        a({"href": "https://linkedin.com/in/fatih-erikli-2a8315337"}, "linkedin"), " ",
+        a({"href": "https://linkedin.com/in/fatih-erikli-2a8315337"}, "linkedin"),
         a({"href": "https://github.com/fatih-erikli-potato"}, "github")
       )
     ),

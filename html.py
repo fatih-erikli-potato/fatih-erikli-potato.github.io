@@ -40,7 +40,7 @@ def tag(name, *args):
         elif isinstance(v, dict):
           v = ';'.join("%s:%s" % (k, strip_quote(v) if isinstance(v, str) else v) for k, v in v.items())
         html_output += "\"%s\"" % v
-  if self_closing:
+  if self_closing and not content:
     html_output += "/>"
   else:
     html_output += ">"
@@ -57,6 +57,16 @@ def make_svg(width, height, *tag_definitions):
     markup += make_html(tag_definition)
   markup += '</svg>'
   return markup
+
+def make_rss(*tag_definitions):
+  rss = '<?xml version="1.0" encoding="UTF-8" ?>'
+  rss += '<rss version="2.0">'
+  rss += "<channel>"
+  for tag_definition in tag_definitions:
+    rss += make_html(tag_definition)
+  rss += "</channel>"
+  rss += '</rss>'
+  return rss
 
 def make_html_w_doctype(attrs, *tag_definitions):
   html = "<!doctype html>"
@@ -83,7 +93,8 @@ def make_html_w_doctype(attrs, *tag_definitions):
   html += "</html>"
   return html
 
-allowed_tags = ["form", "div", "label", "input", "a", "img", "svg", "polygon", "br", "script", "span", "link", "p", "pre"]
+allowed_tags = ["form", "div", "label", "input", "a", "img", "svg", "polygon", "br", "script", "span", "link", "p", "pre",
+                "item", "title", "link", "description"]
 self_closing_tags = ["br", "link", "img"]
 allowed_attrs = ["src", "style", "class", "alt", "href", "action", "disabled", "rel",
                  "method", "type", "value", "width", "height", "points", "stroke", "fill", "xmlns", "enctype", "name"]
@@ -136,3 +147,24 @@ def svg(*args): return ['svg', *args]
 def polygon(*args): return ['polygon', *args]
 def pre(*args): return ['pre', *args]
 def p(*args): return ['p', *args]
+
+# rss
+def item(*args): return ['item', *args]
+def title(*args): return ['title', *args]
+# def link(*args): return ['link', *args]
+def description(*args): return ['description', *args]
+#  <channel>
+#   <title>W3Schools Home Page</title>
+#   <link>https://www.w3schools.com</link>
+#   <description>Free web building tutorials</description>
+#   <item>
+#     <title>RSS Tutorial</title>
+#     <link>https://www.w3schools.com/xml/xml_rss.asp</link>
+#     <description>New RSS tutorial on W3Schools</description>
+#   </item>
+#   <item>
+#     <title>XML Tutorial</title>
+#     <link>https://www.w3schools.com/xml</link>
+#     <description>New XML tutorial on W3Schools</description>
+#   </item>
+# </channel>
