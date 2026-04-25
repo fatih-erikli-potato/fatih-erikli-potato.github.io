@@ -1,10 +1,49 @@
-from render import render
+from create_cube import create_cube
+from darken import darken
 from carboncopy import carboncopy
 from ball import create_ball
 from bezier import bezier, lerp
 from rotate import rotate_xyz
+import math
 
 from PIL import Image, ImageDraw
+
+def centerz_sort(face):
+  points, rgb = face
+  sumz = 0
+  for x, y, z in points:
+    z += sumz
+  return sumz / len(points)
+
+def render(name, cubes, width, height, unit_scale, rotate_horizontal, rotate_vertical):
+  width *= unit_scale
+  height *= unit_scale
+  image = Image.new("RGBA", (width, height), (255, 255, 255, 0))
+  draw = ImageDraw.Draw(image)
+  faces = []
+  for x, y, z, r, g, b in cubes:
+    cube = create_cube(x, y, z, rotate_horizontal, rotate_vertical)
+    for darken_percent, *diamond in cube:
+      points = []
+      for xx, yy, zz in diamond:
+        xn, yn, zn = rotate_xyz(
+          xx * unit_scale,
+          yy * unit_scale,
+          zz * unit_scale,
+          rotate_horizontal,
+          rotate_vertical
+        )
+        points.append([xn, yn, zn])
+      faces.append([points, darken(r, g, b, darken_percent)])
+  faces.sort(key=centerz_sort)
+  for abcd, rgb in faces:
+    points = []
+    for xx, yy, zz in abcd:
+      x = width/2 + xx
+      y = height/2 + (yy * -1)
+      points.append((x, y))
+    draw.polygon(points, (*rgb, 255))
+  return image
 
 def distance(a, b):
   ax, ay, az = a
@@ -14,9 +53,9 @@ def distance(a, b):
   dz = max(az, bz) - min(az, bz)
   return max(dx, dy, dz)
 
-WIDTH = 1024
-HEIGHT = 1024
-UNIT_SCALE = 2
+WIDTH = 512
+HEIGHT = 512
+UNIT_SCALE = 4
 ROTATE_H = 40
 ROTATE_V = 20
 
@@ -35,9 +74,9 @@ for curve in surface:
     p[1] *= scale_surface
     p[2] *= scale_surface
 
-wide = 10
-fall = 10
-ball_size = 4
+wide = 4
+fall = 4
+ball_size = 1
 faces = []
 
 for w in range(0, wide):
@@ -76,6 +115,8 @@ def avg_rgb(carbon_copy, img):
         sum_g += rgb[1]
         sum_b += rgb[2]
         shade_len += 1
+  if shade_len == 0:
+    return (255, 255, 255)
   avg_r = int(sum_r / shade_len)
   avg_g = int(sum_g / shade_len)
   avg_b = int(sum_b / shade_len)
@@ -83,18 +124,17 @@ def avg_rgb(carbon_copy, img):
 
 faces_rendered = []
 
+# face_index = 0
 for a, b, c, d, *rgb in faces:
   cubes = []
   segments_wide = max(distance(a,b), distance(d, c))
-  for i in range(0, int(segments_wide)):
+  for i in range(0, math.ceil(segments_wide)):
     linea = lerp(i/segments_wide, a, b)
     lineb = lerp(i/segments_wide, d, c)
     segments_line = distance(linea, lineb)
-    for j in range(0, int(segments_line)):
+    for j in range(0, math.ceil(segments_line)):
       px, py, pz = lerp(j/segments_line, linea, lineb)
-      for x, y, z in create_ball(ball_size):
-        cubes.append([px + x, py + y, pz + z, *rgb])
-  cubes.sort(key=zsort)
+      cubes.append([px, py, pz, *rgb])
   img = render(
     "face",
     cubes,
@@ -102,15 +142,20 @@ for a, b, c, d, *rgb in faces:
     HEIGHT,
     UNIT_SCALE,
     ROTATE_H,
-    ROTATE_V,
-    False
-  )
+    ROTATE_V
+  )  
   carbon_copy = carboncopy([a, b, c, d], WIDTH, HEIGHT, UNIT_SCALE, ROTATE_H, ROTATE_V)
+  # img.save(open("painting/cubes-{0}.png".format(face_index), "wb"), "PNG")
+  # carbon_copy.save(open("painting/carboncopy-{0}.png".format(face_index), "wb"), "PNG")
+  # img.alpha_composite(carbon_copy)
+  # img.save(open("painting/carboncopy-over-{0}.png".format(face_index), "wb"), "PNG")
   # img.save(open("render-6-face.png", "wb"), "PNG")
   # carbon_copy.save(open("render-6-carbon-copy.png", "wb"), "PNG")
   # break
   rr, gg, bb = avg_rgb(carbon_copy, img)
   faces_rendered.append([a, b, c, d, rr, gg, bb])
+  # face_index += 1
+  # break
 
 def draw_rendered_faces(name, faces_rendered, rh, rv):
   width = WIDTH * UNIT_SCALE
@@ -127,12 +172,6 @@ def draw_rendered_faces(name, faces_rendered, rh, rv):
       points.append((xn, yn, zn))
     faces_on_canvas.append([points, rgb])
 
-  def centerz_sort(face):
-    points, rgb = face
-    sumz = 0
-    for x, y, z in points:
-      z += sumz
-    return sumz / len(points)
   faces_on_canvas.sort(key=centerz_sort)
 
   for face in faces_on_canvas:
@@ -144,5 +183,6 @@ def draw_rendered_faces(name, faces_rendered, rh, rv):
 
   image.save(open("{}.png".format(name), "wb"), "PNG")
 
-draw_rendered_faces("render-6-1", faces_rendered, ROTATE_H, ROTATE_V)
-draw_rendered_faces("render-6-2", faces_rendered, ROTATE_H + 10, ROTATE_V)
+# draw_rendered_faces("render-6", faces_rendered, ROTATE_H, ROTATE_V)
+# draw_rendered_faces("render-6-1", faces_rendered, ROTATE_H, ROTATE_V)
+# draw_rendered_faces("render-6-2", faces_rendered, ROTATE_H + 10, ROTATE_V)
