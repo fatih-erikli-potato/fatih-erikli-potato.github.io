@@ -74,9 +74,8 @@ for curve in surface:
     p[1] *= scale_surface
     p[2] *= scale_surface
 
-wide = 4
-fall = 4
-ball_size = 1
+wide = 40
+fall = 40
 faces = []
 
 for w in range(0, wide):
@@ -184,5 +183,6 @@ def draw_rendered_faces(name, faces_rendered, rh, rv):
   image.save(open("{}.png".format(name), "wb"), "PNG")
 
 # draw_rendered_faces("render-6", faces_rendered, ROTATE_H, ROTATE_V)
-# draw_rendered_faces("render-6-1", faces_rendered, ROTATE_H, ROTATE_V)
-# draw_rendered_faces("render-6-2", faces_rendered, ROTATE_H + 10, ROTATE_V)
+draw_rendered_faces("render-6-1", faces_rendered, ROTATE_H, ROTATE_V)
+draw_rendered_faces("render-6-2", faces_rendered, ROTATE_H + 10, ROTATE_V)
+draw_rendered_faces("render-6-3", faces_rendered, ROTATE_H + 20, ROTATE_V)
