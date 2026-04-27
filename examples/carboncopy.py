@@ -2,7 +2,7 @@ from rotate import rotate_xyz
  
 from PIL import Image, ImageDraw
  
-def carboncopy(abcd, width, height, unit_scale, rotate_horizontal, rotate_vertical):
+def carboncopy(abcd, width, height, unit_scale, rotate_horizontal, rotate_vertical, rgba=(0, 0, 0, 255)):
   width *= unit_scale
   height *= unit_scale
   image = Image.new("RGBA", (width, height), (255, 255, 255, 0))
@@ -13,5 +13,5 @@ def carboncopy(abcd, width, height, unit_scale, rotate_horizontal, rotate_vertic
     x = width/2 + xn
     y = height/2 + (yn * -1)
     points.append((x, y))
-  draw.polygon(points, (0, 0, 0, 255))
+  draw.polygon(points, rgba)
   return image

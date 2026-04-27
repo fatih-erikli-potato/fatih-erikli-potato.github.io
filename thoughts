@@ -156,7 +156,9 @@ image:/examples/painting/carboncopy-0.png
 image:/examples/painting/cubes-0.png
  
 image:/examples/painting/carboncopy-over-0.png
- 
+
+image:/examples/painting/rendered-0.png
+
 Each face, should be drawn to an empty canvas as black, and to another one with rendered cubes. The average rgb color stays in the area of face that painted as black on the canvas will be the rendered color.
 
 - code:python -

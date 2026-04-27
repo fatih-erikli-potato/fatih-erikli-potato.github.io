@@ -55,7 +55,7 @@ def distance(a, b):
 
 WIDTH = 512
 HEIGHT = 512
-UNIT_SCALE = 4
+UNIT_SCALE = 10
 ROTATE_H = 40
 ROTATE_V = 20
 
@@ -74,8 +74,8 @@ for curve in surface:
     p[1] *= scale_surface
     p[2] *= scale_surface
 
-wide = 40
-fall = 40
+wide = 4
+fall = 4
 faces = []
 
 for w in range(0, wide):
@@ -123,7 +123,7 @@ def avg_rgb(carbon_copy, img):
 
 faces_rendered = []
 
-# face_index = 0
+face_index = 0
 for a, b, c, d, *rgb in faces:
   cubes = []
   segments_wide = max(distance(a,b), distance(d, c))
@@ -144,17 +144,17 @@ for a, b, c, d, *rgb in faces:
     ROTATE_V
   )  
   carbon_copy = carboncopy([a, b, c, d], WIDTH, HEIGHT, UNIT_SCALE, ROTATE_H, ROTATE_V)
-  # img.save(open("painting/cubes-{0}.png".format(face_index), "wb"), "PNG")
-  # carbon_copy.save(open("painting/carboncopy-{0}.png".format(face_index), "wb"), "PNG")
-  # img.alpha_composite(carbon_copy)
-  # img.save(open("painting/carboncopy-over-{0}.png".format(face_index), "wb"), "PNG")
-  # img.save(open("render-6-face.png", "wb"), "PNG")
-  # carbon_copy.save(open("render-6-carbon-copy.png", "wb"), "PNG")
-  # break
+  carbon_copy_over = carboncopy([a, b, c, d], WIDTH, HEIGHT, UNIT_SCALE, ROTATE_H, ROTATE_V, (0, 0, 255, 100))
+  imgcarboncopyover = img.copy()
+  imgcarboncopyover.alpha_composite(carbon_copy_over)
   rr, gg, bb = avg_rgb(carbon_copy, img)
   faces_rendered.append([a, b, c, d, rr, gg, bb])
-  # face_index += 1
-  # break
+  renderedface = carboncopy([a, b, c, d], WIDTH, HEIGHT, UNIT_SCALE, ROTATE_H, ROTATE_V, (rr, gg, bb, 255))
+  img.save(open("painting/cubes-{0}.png".format(face_index), "wb"), "PNG")
+  imgcarboncopyover.save(open("painting/carboncopy-over-{0}.png".format(face_index), "wb"), "PNG")
+  carbon_copy.save(open("painting/carboncopy-{0}.png".format(face_index), "wb"), "PNG")
+  renderedface.save(open("painting/rendered-{0}.png".format(face_index), "wb"), "PNG")
+  face_index += 1
 
 def draw_rendered_faces(name, faces_rendered, rh, rv):
   width = WIDTH * UNIT_SCALE
@@ -183,6 +183,6 @@ def draw_rendered_faces(name, faces_rendered, rh, rv):
   image.save(open("{}.png".format(name), "wb"), "PNG")
 
 # draw_rendered_faces("render-6", faces_rendered, ROTATE_H, ROTATE_V)
-draw_rendered_faces("render-6-1", faces_rendered, ROTATE_H, ROTATE_V)
-draw_rendered_faces("render-6-2", faces_rendered, ROTATE_H + 10, ROTATE_V)
-draw_rendered_faces("render-6-3", faces_rendered, ROTATE_H + 20, ROTATE_V)
+# draw_rendered_faces("render-6-1", faces_rendered, ROTATE_H, ROTATE_V)
+# draw_rendered_faces("render-6-2", faces_rendered, ROTATE_H + 10, ROTATE_V)
+# draw_rendered_faces("render-6-3", faces_rendered, ROTATE_H + 20, ROTATE_V)
