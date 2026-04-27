@@ -55,7 +55,7 @@ def distance(a, b):
 
 WIDTH = 512
 HEIGHT = 512
-UNIT_SCALE = 10
+UNIT_SCALE = 4
 ROTATE_H = 40
 ROTATE_V = 20
 
@@ -74,8 +74,8 @@ for curve in surface:
     p[1] *= scale_surface
     p[2] *= scale_surface
 
-wide = 4
-fall = 4
+wide = 20
+fall = 20
 faces = []
 
 for w in range(0, wide):
@@ -144,16 +144,16 @@ for a, b, c, d, *rgb in faces:
     ROTATE_V
   )  
   carbon_copy = carboncopy([a, b, c, d], WIDTH, HEIGHT, UNIT_SCALE, ROTATE_H, ROTATE_V)
-  carbon_copy_over = carboncopy([a, b, c, d], WIDTH, HEIGHT, UNIT_SCALE, ROTATE_H, ROTATE_V, (0, 0, 255, 100))
-  imgcarboncopyover = img.copy()
-  imgcarboncopyover.alpha_composite(carbon_copy_over)
+  #carbon_copy_over = carboncopy([a, b, c, d], WIDTH, HEIGHT, UNIT_SCALE, ROTATE_H, ROTATE_V, (0, 0, 255, 100))
+  #imgcarboncopyover = img.copy()
+  #imgcarboncopyover.alpha_composite(carbon_copy_over)
   rr, gg, bb = avg_rgb(carbon_copy, img)
   faces_rendered.append([a, b, c, d, rr, gg, bb])
-  renderedface = carboncopy([a, b, c, d], WIDTH, HEIGHT, UNIT_SCALE, ROTATE_H, ROTATE_V, (rr, gg, bb, 255))
-  img.save(open("painting/cubes-{0}.png".format(face_index), "wb"), "PNG")
-  imgcarboncopyover.save(open("painting/carboncopy-over-{0}.png".format(face_index), "wb"), "PNG")
-  carbon_copy.save(open("painting/carboncopy-{0}.png".format(face_index), "wb"), "PNG")
-  renderedface.save(open("painting/rendered-{0}.png".format(face_index), "wb"), "PNG")
+  # renderedface = carboncopy([a, b, c, d], WIDTH, HEIGHT, UNIT_SCALE, ROTATE_H, ROTATE_V, (rr, gg, bb, 255))
+  # img.save(open("painting/cubes-{0}.png".format(face_index), "wb"), "PNG")
+  # imgcarboncopyover.save(open("painting/carboncopy-over-{0}.png".format(face_index), "wb"), "PNG")
+  # carbon_copy.save(open("painting/carboncopy-{0}.png".format(face_index), "wb"), "PNG")
+  # renderedface.save(open("painting/rendered-{0}.png".format(face_index), "wb"), "PNG")
   face_index += 1
 
 def draw_rendered_faces(name, faces_rendered, rh, rv):
