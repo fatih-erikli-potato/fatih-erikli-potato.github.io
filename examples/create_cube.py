@@ -1,5 +1,4 @@
 def create_cube(x, y, z, rotate_horizontal, rotate_vertical):
-  # only up to horizontally 90 degrees implemented in this example
   if rotate_vertical > 0 and rotate_vertical < 90 and rotate_horizontal < 90 and rotate_horizontal > 0:
     return [
       [

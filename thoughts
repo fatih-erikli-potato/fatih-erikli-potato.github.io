@@ -151,13 +151,13 @@ I show the marble-drawn result for demonstration purpose. It is being used only 
 
 Keeping the wide and tall parameters less, drawing lines between sparse points with their segments calculated by their distance will ease the painting process. Instead of showing the faces with balls made of cubes, finding the shaded color of a face by calculating the average of rendered cubes that stays in the area of it. It works well, plus it is possible to scale or see them in different angles without a need to build and render again.
   
-image:/examples/painting/carboncopy-0.png
+image:/examples/painting/carboncopy-1.png
  
-image:/examples/painting/cubes-0.png
+image:/examples/painting/cubes-1.png
  
-image:/examples/painting/carboncopy-over-0.png
+image:/examples/painting/carboncopy-over-1.png
 
-image:/examples/painting/rendered-0.png
+image:/examples/painting/rendered-1.png
 
 Each face, should be drawn to an empty canvas as black, and to another one with rendered cubes. The average rgb color stays in the area of face that painted as black on the canvas will be the rendered color.
 
