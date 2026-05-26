@@ -175,7 +175,7 @@ It is possible to see in different angle without a need to re-render them.
  
 image:/examples/render-6-1.png
 
-image:/examples/render-6-2.png
+image:/examples/render-6-3.png
  
 The render part is written in Python language. I edit the surfaces by an application that runs on a browser written with javascript when I am creating something. Here are some examples that I rendered in this way.
  

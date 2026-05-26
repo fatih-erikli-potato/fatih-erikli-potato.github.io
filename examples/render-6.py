@@ -15,12 +15,17 @@ def centerz_sort(face):
     z += sumz
   return sumz / len(points)
 
+def cube_sort(cube):
+  x, y, z, r, g, b = cube
+  return y, z, x
+
 def render(name, cubes, width, height, unit_scale, rotate_horizontal, rotate_vertical):
   width *= unit_scale
   height *= unit_scale
   image = Image.new("RGBA", (width, height), (255, 255, 255, 0))
   draw = ImageDraw.Draw(image)
   faces = []
+  cubes.sort(key=cube_sort)
   for x, y, z, r, g, b in cubes:
     cube = create_cube(x, y, z, rotate_horizontal, rotate_vertical)
     for darken_percent, *diamond in cube:
@@ -35,7 +40,7 @@ def render(name, cubes, width, height, unit_scale, rotate_horizontal, rotate_ver
         )
         points.append([xn, yn, zn])
       faces.append([points, darken(r, g, b, darken_percent)])
-  faces.sort(key=centerz_sort)
+  # faces.sort(key=centerz_sort)
   for abcd, rgb in faces:
     points = []
     for xx, yy, zz in abcd:
