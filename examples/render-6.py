@@ -79,8 +79,8 @@ for curve in surface:
     p[1] *= scale_surface
     p[2] *= scale_surface
 
-wide = 20
-fall = 20
+wide = 60
+fall = 60
 faces = []
 
 for w in range(0, wide):
@@ -189,5 +189,5 @@ def draw_rendered_faces(name, faces_rendered, rh, rv):
 
 # draw_rendered_faces("render-6", faces_rendered, ROTATE_H, ROTATE_V)
 # draw_rendered_faces("render-6-1", faces_rendered, ROTATE_H, ROTATE_V)
-# draw_rendered_faces("render-6-2", faces_rendered, ROTATE_H + 10, ROTATE_V)
-# draw_rendered_faces("render-6-3", faces_rendered, ROTATE_H + 20, ROTATE_V)
+draw_rendered_faces("render-6-2", faces_rendered, ROTATE_H, ROTATE_V)
+draw_rendered_faces("render-6-3", faces_rendered, ROTATE_H + 20, ROTATE_V)

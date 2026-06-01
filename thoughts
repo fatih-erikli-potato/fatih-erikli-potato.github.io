@@ -111,7 +111,7 @@ The unit of width and height will be cubes.
 
 image:/examples/render-1.png
  
-Unit scale is too much for demonstration purpose. It will be very less when using the cubes to create something that looks like not made of cubes. A bezier surface will be rendered with balls that mades of cubes.
+Unit scale is too much for demonstration purpose.
  
 - code:python -
 %(examples/ball.py)s
@@ -127,27 +127,15 @@ The result will be this.
  
 image:/examples/render-2.png
  
-A bezier surface is made of four bezier curves. Lets try to render a single bezier curve and complete the render process first.
+A bezier surface is made of four bezier curves.
  
 - code:python -
 %(examples/render-3.py)s
 - code -
  
-Cubes are sorted in their rendering order after the bezier interpolation.
+Cubes are sorted in their painting order. They are used for painting the faces of a bezier surface.
  
-image:/examples/render-3.png
-
 Each interpolated point in four bezier curves, will be used for creating another curve. So in that way it will be possible shape a solid surface. A surface in this example has four curves and two properties, wide and fall. Wide is the one is longing, and fall is a curve that created by longing interpolated points.
- 
-- code:python -
-%(examples/render-4.py)s
-- code -
- 
-The result is looking like this.
- 
-image:/examples/render-4-3.png
- 
-I show the marble-drawn result for demonstration purpose. It is being used only for painting the faces. I think it explains how the painting works very well.
 
 Keeping the wide and tall parameters less, drawing lines between sparse points with their segments calculated by their distance will ease the painting process. Instead of showing the faces with balls made of cubes, finding the shaded color of a face by calculating the average of rendered cubes that stays in the area of it. It works well, plus it is possible to scale or see them in different angles without a need to build and render again.
   
@@ -174,7 +162,9 @@ image:/examples/render-6.png
 It is possible to see in different angle without a need to re-render them.
  
 image:/examples/render-6-1.png
-
+ 
+image:/examples/render-6-2.png
+ 
 image:/examples/render-6-3.png
  
 The render part is written in Python language. I edit the surfaces by an application that runs on a browser written with javascript when I am creating something. Here are some examples that I rendered in this way.
