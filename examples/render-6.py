@@ -79,8 +79,8 @@ for curve in surface:
     p[1] *= scale_surface
     p[2] *= scale_surface
 
-wide = 60
-fall = 60
+wide = 80
+fall = 80
 faces = []
 
 for w in range(0, wide):
