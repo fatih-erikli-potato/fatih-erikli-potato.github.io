@@ -16,7 +16,7 @@ def create_cube(x, y, z, rotate_horizontal, rotate_vertical):
         [x, y, z+1]
       ],
       [
-        30,
+        25,
         [x, y, z+1],
         [x+1, y, z+1],
         [x+1, y-1, z+1],
