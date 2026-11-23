@@ -89,11 +89,29 @@ for post in posts:
     )
   )
 write_html("index.html", "THINKING OUT LOUD", div(
-  div({"class": "header"}, "HI, I AM FATIH ERIKLI"),
-  div({"class": "text-block"}, "I am a software developer."),
-  div({"class": "header"}, "THINKING OUT LOUD"),
-  *posts_tags
+  div({"class": "header"}, "ABOUT ME"),
+  div({"class": "text-block"}, "I am Fatih Erikli. I am a software developer who lives in Turkey."),
+  div({"class": "header"}, "BLOG"),
+  *posts_tags,
+  div({"class": "header"}, "DEMOS"),
+  div({"class": "demo"},
+    a({"class": "demo-title", "href": "https://iceland-seven.vercel.app", "target": "_blank"}, "https://iceland-seven.vercel.app"),
+    div("Voxel blocks sharing app with authentication. Built with nextjs. Deployed on vercel.")
+  ),
+  div({"class": "demo"},
+    a({"class": "demo-title", "href": "https://sheets-rosy.vercel.app", "target": "_blank"}, "https://sheets-rosy.vercel.app"),
+    div("Simple sheets sharing app. I am creating an excel interpreter, it is not included in demo yet.")
+  ),
+  div({"class": "demo"},
+    a({"class": "demo-title", "href": "https://fatih-erikli-potato.github.io/bezier-surfaces/", "target": "_blank"}, "https://fatih-erikli-potato.github.io/bezier-surfaces/"),
+    div("Bezier surface editing app with grouping, split, slice features.")
+  ),
+  div({"class": "demo"},
+    a({"class": "demo-title", "href": "hhttps://fatih-erikli-potato.github.io/path-draw/", "target": "_blank"}, "https://fatih-erikli-potato.github.io/path-draw/"),
+    div("Bezier path drawing tool with infinite zoom.")
+  )
 ))
+
 for post in posts:
   write_html("blog/{0}.html".format(post["slug"]), post["title"],
     div({"class": "text-block"}, a({"href": "/"}, "home")),

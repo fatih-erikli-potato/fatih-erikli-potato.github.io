@@ -3,7 +3,7 @@ body {
   line-height: 1.4;
 }
 .header {
-  text-align: center;
+  /*text-align: center;*/
   padding: 20px 0;
   font-size: 1.5em;
 }
@@ -28,4 +28,11 @@ pre {padding: 10px 10px;
   border-top: 1px solid black;
   margin: 10px 0;
   padding: 10px 0;
+}
+.demo-title {
+  color: gray;
+}
+.demo {
+  margin: 0 0 5px;
+  padding-bottom: 5px;
 }

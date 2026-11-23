@@ -97,7 +97,7 @@ allowed_tags = ["form", "div", "label", "input", "a", "img", "svg", "polygon", "
                 "item", "title", "link", "description"]
 self_closing_tags = ["br", "link", "img"]
 allowed_attrs = ["src", "style", "class", "alt", "href", "action", "disabled", "rel",
-                 "method", "type", "value", "width", "height", "points", "stroke", "fill", "xmlns", "enctype", "name"]
+                 "method", "type", "value", "width", "height", "points", "stroke", "fill", "xmlns", "enctype", "name", "target"]
 
 def make_html(array):
   tag_name = array[0]
@@ -151,20 +151,4 @@ def p(*args): return ['p', *args]
 # rss
 def item(*args): return ['item', *args]
 def title(*args): return ['title', *args]
-# def link(*args): return ['link', *args]
 def description(*args): return ['description', *args]
-#  <channel>
-#   <title>W3Schools Home Page</title>
-#   <link>https://www.w3schools.com</link>
-#   <description>Free web building tutorials</description>
-#   <item>
-#     <title>RSS Tutorial</title>
-#     <link>https://www.w3schools.com/xml/xml_rss.asp</link>
-#     <description>New RSS tutorial on W3Schools</description>
-#   </item>
-#   <item>
-#     <title>XML Tutorial</title>
-#     <link>https://www.w3schools.com/xml</link>
-#     <description>New XML tutorial on W3Schools</description>
-#   </item>
-# </channel>

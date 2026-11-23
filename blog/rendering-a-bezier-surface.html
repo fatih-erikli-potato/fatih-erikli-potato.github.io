@@ -16,7 +16,7 @@
         </span><span class="bracked_begin">[</span><span class="identifier">x</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">y</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">z</span><span class="operator">+</span><span class="number">1</span><span class="bracket_end">]</span><span class="whitespace">
       </span><span class="bracket_end">]</span><span class="comma">,</span><span class="whitespace">
       </span><span class="bracked_begin">[</span><span class="whitespace">
-        </span><span class="number">30</span><span class="comma">,</span><span class="whitespace">
+        </span><span class="number">25</span><span class="comma">,</span><span class="whitespace">
         </span><span class="bracked_begin">[</span><span class="identifier">x</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">y</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">z</span><span class="operator">+</span><span class="number">1</span><span class="bracket_end">]</span><span class="comma">,</span><span class="whitespace">
         </span><span class="bracked_begin">[</span><span class="identifier">x</span><span class="operator">+</span><span class="number">1</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">y</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">z</span><span class="operator">+</span><span class="number">1</span><span class="bracket_end">]</span><span class="comma">,</span><span class="whitespace">
         </span><span class="bracked_begin">[</span><span class="identifier">x</span><span class="operator">+</span><span class="number">1</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">y</span><span class="operator">-</span><span class="number">1</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">z</span><span class="operator">+</span><span class="number">1</span><span class="bracket_end">]</span><span class="comma">,</span><span class="whitespace">
@@ -46,9 +46,9 @@
   </span><span class="bracked_begin">[</span><span class="whitespace">
     </span><span class="bracked_begin">[</span><span class="number">0</span><span class="comma">,</span><span class="whitespace"> </span><span class="number">0</span><span class="comma">,</span><span class="whitespace"> </span><span class="number">0</span><span class="comma">,</span><span class="whitespace"> </span><span class="number">255</span><span class="comma">,</span><span class="whitespace"> </span><span class="number">255</span><span class="comma">,</span><span class="whitespace"> </span><span class="number">255</span><span class="bracket_end">]</span><span class="whitespace">
   </span><span class="bracket_end">]</span><span class="comma">,</span><span class="whitespace">
-  </span><span class="number">4</span><span class="comma">,</span><span class="whitespace">
-  </span><span class="number">4</span><span class="comma">,</span><span class="whitespace">
-  </span><span class="number">1024</span><span class="comma">,</span><span class="whitespace">
+  </span><span class="number">32</span><span class="comma">,</span><span class="whitespace">
+  </span><span class="number">32</span><span class="comma">,</span><span class="whitespace">
+  </span><span class="number">64</span><span class="comma">,</span><span class="whitespace">
   </span><span class="number">40</span><span class="comma">,</span><span class="whitespace">
   </span><span class="number">20</span><span class="comma">,</span><span class="whitespace">
 </span><span class="paran_end">)</span><span class="whitespace">
@@ -95,7 +95,10 @@
 
 </span><span class="identifier">cubes</span><span class="whitespace"> </span><span class="operator">=</span><span class="whitespace"> </span><span class="bracked_begin">[</span><span class="bracket_end">]</span><span class="whitespace">
 
-</span><span class="reserved">for</span><span class="whitespace"> </span><span class="identifier">x</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">y</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">z</span><span class="whitespace"> </span><span class="reserved">in</span><span class="whitespace"> </span><span class="identifier">create_ball</span><span class="paran_begin">(</span><span class="number">128</span><span class="paran_end">)</span><span class="colon">:</span><span class="whitespace">
+</span><span class="comment"># for x, y, z in create_ball(128):</span><span class="whitespace">
+</span><span class="comment">#  cubes.append([x, y, z, 255, 255, 255])</span><span class="whitespace">
+
+</span><span class="reserved">for</span><span class="whitespace"> </span><span class="identifier">x</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">y</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">z</span><span class="whitespace"> </span><span class="reserved">in</span><span class="whitespace"> </span><span class="identifier">create_ball</span><span class="paran_begin">(</span><span class="number">4</span><span class="paran_end">)</span><span class="colon">:</span><span class="whitespace">
  </span><span class="identifier">cubes</span><span class="dot">.</span><span class="identifier">append</span><span class="paran_begin">(</span><span class="bracked_begin">[</span><span class="identifier">x</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">y</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">z</span><span class="comma">,</span><span class="whitespace"> </span><span class="number">255</span><span class="comma">,</span><span class="whitespace"> </span><span class="number">255</span><span class="comma">,</span><span class="whitespace"> </span><span class="number">255</span><span class="bracket_end">]</span><span class="paran_end">)</span><span class="whitespace">
 
 </span><span class="reserved">def</span><span class="whitespace"> </span><span class="identifier">zsort</span><span class="paran_begin">(</span><span class="identifier">cube</span><span class="paran_end">)</span><span class="colon">:</span><span class="whitespace">
@@ -105,11 +108,11 @@
 </span><span class="identifier">cubes</span><span class="dot">.</span><span class="identifier">sort</span><span class="paran_begin">(</span><span class="identifier">key</span><span class="operator">=</span><span class="identifier">zsort</span><span class="paran_end">)</span><span class="whitespace">
 
 </span><span class="identifier">render</span><span class="paran_begin">(</span><span class="whitespace">
-  </span><span class="string">"render-2-1"</span><span class="comma">,</span><span class="whitespace">
+  </span><span class="string">"render-2-2"</span><span class="comma">,</span><span class="whitespace">
   </span><span class="identifier">cubes</span><span class="comma">,</span><span class="whitespace">
-  </span><span class="number">1024</span><span class="comma">,</span><span class="whitespace">
-  </span><span class="number">1024</span><span class="comma">,</span><span class="whitespace">
-  </span><span class="number">4</span><span class="comma">,</span><span class="whitespace">
+  </span><span class="number">24</span><span class="comma">,</span><span class="whitespace">
+  </span><span class="number">24</span><span class="comma">,</span><span class="whitespace">
+  </span><span class="number">20</span><span class="comma">,</span><span class="whitespace">
   </span><span class="number">40</span><span class="comma">,</span><span class="whitespace">
   </span><span class="number">20</span><span class="comma">,</span><span class="whitespace">
 </span><span class="paran_end">)</span><span class="whitespace">
@@ -245,8 +248,8 @@
     </span><span class="identifier">p</span><span class="bracked_begin">[</span><span class="number">1</span><span class="bracket_end">]</span><span class="whitespace"> </span><span class="operator">*</span><span class="operator">=</span><span class="whitespace"> </span><span class="identifier">scale_surface</span><span class="whitespace">
     </span><span class="identifier">p</span><span class="bracked_begin">[</span><span class="number">2</span><span class="bracket_end">]</span><span class="whitespace"> </span><span class="operator">*</span><span class="operator">=</span><span class="whitespace"> </span><span class="identifier">scale_surface</span><span class="whitespace">
 
-</span><span class="identifier">wide</span><span class="whitespace"> </span><span class="operator">=</span><span class="whitespace"> </span><span class="number">80</span><span class="whitespace">
-</span><span class="identifier">fall</span><span class="whitespace"> </span><span class="operator">=</span><span class="whitespace"> </span><span class="number">80</span><span class="whitespace">
+</span><span class="identifier">wide</span><span class="whitespace"> </span><span class="operator">=</span><span class="whitespace"> </span><span class="number">60</span><span class="whitespace">
+</span><span class="identifier">fall</span><span class="whitespace"> </span><span class="operator">=</span><span class="whitespace"> </span><span class="number">60</span><span class="whitespace">
 </span><span class="identifier">faces</span><span class="whitespace"> </span><span class="operator">=</span><span class="whitespace"> </span><span class="bracked_begin">[</span><span class="bracket_end">]</span><span class="whitespace">
 
 </span><span class="reserved">for</span><span class="whitespace"> </span><span class="identifier">w</span><span class="whitespace"> </span><span class="reserved">in</span><span class="whitespace"> </span><span class="identifier">range</span><span class="paran_begin">(</span><span class="number">0</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">wide</span><span class="paran_end">)</span><span class="colon">:</span><span class="whitespace">
