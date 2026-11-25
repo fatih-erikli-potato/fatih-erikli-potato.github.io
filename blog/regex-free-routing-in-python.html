@@ -70,11 +70,11 @@
       </span><span class="reserved">return</span><span class="whitespace"> </span><span class="identifier">args</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">func</span><span class="whitespace">
 </span></pre><p></p><p>The function add_rule may be called in decorator format as in the example below or a function call by giving the second argument as the function.</p><p></p><p>Here is an example</p><p></p><pre><span class="reserved">from</span><span class="whitespace"> </span><span class="identifier">router</span><span class="whitespace"> </span><span class="reserved">import</span><span class="whitespace"> </span><span class="identifier">add_rule</span><span class="comma">,</span><span class="whitespace"> </span><span class="identifier">resolve</span><span class="whitespace">
 
-</span><span class="identifier">add_rule</span><span class="paran_begin">(</span><span class="string">"/"</span><span class="paran_end">)</span><span class="whitespace">
+</span><span class="operator">@</span><span class="identifier">add_rule</span><span class="paran_begin">(</span><span class="string">"/"</span><span class="paran_end">)</span><span class="whitespace">
 </span><span class="reserved">def</span><span class="whitespace"> </span><span class="identifier">index</span><span class="paran_begin">(</span><span class="paran_end">)</span><span class="colon">:</span><span class="whitespace">
   </span><span class="reserved">return</span><span class="whitespace"> </span><span class="string">"index"</span><span class="whitespace">
 
-</span><span class="identifier">add_rule</span><span class="paran_begin">(</span><span class="string">"/words/&lt;word&gt;"</span><span class="paran_end">)</span><span class="whitespace">
+</span><span class="operator">@</span><span class="identifier">add_rule</span><span class="paran_begin">(</span><span class="string">"/words/&lt;word&gt;"</span><span class="paran_end">)</span><span class="whitespace">
 </span><span class="reserved">def</span><span class="whitespace"> </span><span class="identifier">word_detail</span><span class="paran_begin">(</span><span class="identifier">word</span><span class="paran_end">)</span><span class="colon">:</span><span class="whitespace">
   </span><span class="reserved">return</span><span class="whitespace"> </span><span class="identifier">word</span><span class="whitespace">
 

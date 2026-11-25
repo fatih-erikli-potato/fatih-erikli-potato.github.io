@@ -179,7 +179,7 @@ Rendering a bezier surface
 rendering-a-bezier-surface
 Previously I wrote a blog post about how to interpolate a bezier curve. A bezier curve helps us to create smooth lines, surfaces, type faces. A bezier surface is set of bezier curves that is used for imaging a part of something. Before rendering a bezier surface, I will mention about how to render something with Python programming language. I will demonstrate it by rendering a set of cubes. I will simply create cubes, then get the average color of cubes stays on area of each face of bezier surface.
 
- I will not use light or shading models such as Phong shading.
+This is only an experiment. For professional purpose, different shading models with materials such as Phong shading may be better. I like experimenting this. It's fun to see how the shading is done without lighting-shading math done.
  
 - code:python -
 %(examples/create_cube.py)s
