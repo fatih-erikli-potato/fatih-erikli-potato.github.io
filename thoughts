@@ -1,3 +1,101 @@
+Regex-free routing in Python
+regex-free-routing-in-python
+Routing may be challenging. I created a simple router, I use it when I create web apps with Python.
+- code:python -
+rules = []
+
+def parse_rule(rule):
+  r = []
+  buffer = ''
+  type = "path"
+  for t in rule:
+    if t == "<":
+      if buffer:
+        r.append(["path", buffer])
+        buffer = ""
+      type = "placeholder"
+      continue
+    if t == ">":
+      r.append(["placeholder", buffer])
+      buffer = ""
+      type = "path"
+      continue
+    buffer += t
+  if buffer:
+    r.append([type, buffer])
+  return r
+
+def add_rule(rule, func=None):
+  if func is None:
+    def adder(func):
+      add_rule(rule, func)
+    return adder
+  rules.append([parse_rule(rule), func])
+
+def resolve(path):
+  for (rule, func) in rules:
+    match = False
+    skip_until_next_rule = False
+    path_current = path
+    args = {}
+    for (i, (type, name)) in enumerate(rule):
+      if skip_until_next_rule:
+        continue
+      if type == "path":
+        if path_current.startswith(name):
+          match = True
+          path_current = path_current[len(name):]
+          continue
+        else:
+          match = False
+          skip_until_next_rule = True
+          continue
+      if type == "placeholder":
+        next_path = None
+        for [_type, _name] in rule[i+1:]:
+          if _type == "path":
+            next_path = _name
+            break
+        if next_path:
+          if next_path in path_current:
+            arg = path_current[:path_current.index(next_path)]
+            args[name] = arg
+            path_current = path_current[len(arg):]
+            match = True
+          else:
+            skip_until_next_rule = True
+            match = False
+        else:
+          skip_until_next_rule = True
+          args[name] = path_current
+          path_current = ""
+          match = True
+    if not path_current and match:
+      return args, func
+- code -
+
+The function add_rule may be called in decorator format as in the example below or a function call by giving the second argument as the function.
+
+Here is an example
+
+- code:python -
+from router import add_rule, resolve
+
+@add_rule("/")
+def index():
+  return "index"
+
+@add_rule("/words/<word>")
+def word_detail(word):
+  return word
+
+match = resolve("/words/apple")
+if match:
+  print(match[1](**match[0]))
+- code -
+
+Good luck playing with this.
+----
 Slicing bezier surfaces
 slicing-bezier-surfaces
 It is possible to split a bezier surface into two pieces. It helps to slice a surface into several pieces by keeping the whole shape in its original form. In that way we are able to shape one piece of several slices of a whole surface.
@@ -79,7 +177,9 @@ Good luck playing with that.
 ----
 Rendering a bezier surface
 rendering-a-bezier-surface
-Previously I wrote a blog post about how to interpolate a bezier curve. A bezier curve helps us to create smooth lines, surfaces, type faces. A bezier surface is set of bezier curves that is used for imaging a part of something. Before rendering a bezier surface, I will mention about how to render something with Python programming language. I will demonstrate it by rendering a set of cubes, then I will create marbles that made of cubes. A marble will stay at position of an interpolated point of a bezier curve. I will create an optimized cube for making the drawing process easier.
+Previously I wrote a blog post about how to interpolate a bezier curve. A bezier curve helps us to create smooth lines, surfaces, type faces. A bezier surface is set of bezier curves that is used for imaging a part of something. Before rendering a bezier surface, I will mention about how to render something with Python programming language. I will demonstrate it by rendering a set of cubes. I will simply create cubes, then get the average color of cubes stays on area of each face of bezier surface.
+
+ I will not use light or shading models such as Phong shading.
  
 - code:python -
 %(examples/create_cube.py)s
